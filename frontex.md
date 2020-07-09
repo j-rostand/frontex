@@ -4,13 +4,12 @@ author:
 - Jules Rostand[^16]
 date: 9 juillet 2020
 lang: fr-FR
-bibliography: /Users/jrostand/edition/bibliographie-generale.json
-csl: /Users/jrostand/edition/CSL/ULB.csl
+bibliography: bibliographie.yaml
 abstract: Cette étude confronte aux méthodes textométriques l'approche manuelle dévelopées par Cécile Dubernet dans son analyse du discours public de l'agence européenne Frontex. Si cette analyse confirme bien la thèse défendue par Cécile Dubernet selon laquelle le discours public de Frontex se caractérise par la mise en avant de la vulnérabilité des frontières plutôt que celle des réfugiés, les méthodes textométriques permettent également de dégager les reconfigurations du discours public de cette agence européenne face à la crise.
 geometry: "left=4cm,right=4cm,top=2cm,bottom=2cm"
 ---
 
-[^16]: Dossier rendu dans le cadre de la formation en textométrie proposée par M. Léo Dumont au sein du parcours histoire, sciences nuumériques et quantitatives de l'École d'Histoire de la Sorbonne.
+[^16]: Dossier rendu dans le cadre de la formation en textométrie proposée par M. Léo Dumont au sein du [parcours histoire, sciences nuumériques et quantitatives](https://www.pantheonsorbonne.fr/axe-de-recherche/pole-informatique-de-recherche-et-denseignement-en-histoire/master-recherche/parcours-histoire-sciences-numeriques-et-quantitatives/) de l'École d'Histoire de la Sorbonne.
 
 # Introduction
 

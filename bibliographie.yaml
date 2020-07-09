@@ -1,0 +1,166 @@
+---
+references:
+- id: dubernet_qui_2018
+  abstract: >-
+    Cet article présente les résultats d’une analyse critique des communiqués de
+    presse et rapports de l’agence européenne Frontex sur les dix années de sa
+    période opératoire (2006-2016). L’étude du vocabulaire dominant, des thèmes
+    récurrents et des jeux de langage met en évidence la permanence d’une
+    rhétorique du risque soulignant des menaces extérieures aux frontières de
+    l’UE et des vulnérabilités propres. Malgré quelques réflexions sur les
+    droits fondamentaux ou le sauvetage en mer, la vulnérabilité dont parle
+    l’agence reste celle des États européens, non des migrants. Par ailleurs,
+    l’agence se présente comme l’intelligence seule capable d’orienter et de
+    coordonner la sécurisation des frontières. L’attention portée aux mots de
+    l’archive sur la durée permet de nuancer les accusations d’hypocrisie
+    humanitaire régulièrement lancées à l’encontre de Frontex. Ce travail permet
+    également de souligner la structure d’un discours. On note en particulier
+    une crispation sur la frontière en tant que ligne, sur la menace vue comme
+    extérieure et sur la technologie construite comme solution. Compte tenu de
+    la mue de Frontex en 2016, cette étude ouvre la voie à des analyses plus
+    poussées tant sur la marginalisation de la protection juridique des migrants
+    que sur la performativité d’un narratif institutionnel.
+  accessed:
+    - year: 2020
+      month: 6
+      day: 23
+  author:
+    - family: Dubernet
+      given: Cécile
+  container-title: Revue européenne des migrations internationales
+  ISSN: 0765-0752
+  issue: '2'
+  issued:
+    - year: 2018
+  language: fr
+  page: 205-227
+  publisher: Université de Poitiers
+  source: www-cairn-info.janus.bis-sorbonne.fr
+  title: >-
+    Qui est vulnérable ? Une analyse critique du discours public de l’agence
+    européenne Frontex‪
+  type: article-journal
+  URL: >-
+    https://www.cairn.info/revue-europeenne-des-migrations-internationales-2018-2-page-205.htm
+  volume: '34'
+
+- id: heiden_txm_2010
+  abstract: >-
+    Le projet de recherche Fédération des recherches et développements en
+    textométrie autour de la création d'une plateforme logicielle ouverte
+    diffuse sa plateforme d'analyse textométrique de corpus XML-TEI en ligne. La
+    conception de cette plateforme repose sur une synthèse des fonctionnalités
+    des logiciels de textométrie existants. Elle s'appuie sur le recensement des
+    technologies logicielles open-source disponibles et efficaces pour manipuler
+    des ressources numériques XML et Unicode, et sur un état de l'art des
+    moteurs de recherche en texte intégral sur corpus structurés et étiquetés.
+    L'architecture consiste en une boîte à outils Java articulant un composant
+    moteur de recherche (IMS CWB), un environnement de calcul statistique (R) et
+    un module d'importation de corpus XML-TEI. La plateforme est diffusée sous
+    la forme d'une boite à outils en open-source pour les développeurs
+    informatique mais également sous la forme de deux applications pour les
+    utilisateurs finaux de la textométrie : une application à installer sur un
+    poste local (Windows ou Linux) et une application web accessible en ligne.
+    Encore au début de son développement, la plateforme n'implémente à l'heure
+    actuelle que quelques fonctionnalités essentielles, mais sa diffusion en
+    open-source autorise un développement communautaire ouvert. Cela doit
+    faciliter son évolution et l'intégration de nouveaux modèles et méthodes.
+  accessed:
+    - year: 2020
+      month: 6
+      day: 28
+  author:
+    - family: Heiden
+      given: Serge
+    - family: Magué
+      given: Jean-Philippe
+    - family: Pincemin
+      given: Bénédicte
+  event: >-
+    10th International Conference on the Statistical Analysis of Textual Data -
+    JADT 2010
+  issue: '3'
+  issued:
+    - year: 2010
+      month: 6
+      day: 9
+  language: fr
+  page: 1021-1032
+  publisher: Edizioni Universitarie di Lettere Economia Diritto
+  source: halshs.archives-ouvertes.fr
+  title: >-
+    TXM : Une plateforme logicielle open-source pour la textométrie - conception
+    et développement
+  title-short: TXM
+  type: paper-conference
+  URL: 'https://halshs.archives-ouvertes.fr/halshs-00549779'
+  volume: '2'
+
+- id: loubiere_frontex_2013
+  abstract: >-
+    L'agence chargée d'intercepter les migrants à l'entrée de l'Union est
+    accusée de bafouer les droits de l'homme et d'agir dans l'opacité.
+  accessed:
+    - year: 2020
+      month: 7
+      day: 1
+  author:
+    - family: Loubière
+      given: Thomas
+  container-title: Libération
+  issued:
+    - year: 2013
+      month: 10
+      day: 12
+  language: fr
+  section: Planète
+  source: www.liberation.fr
+  title: 'Frontex, l''opacité aux frontières de l''Europe'
+  type: article-newspaper
+  URL: >-
+    https://www.liberation.fr/planete/2013/10/12/frontex-l-opacite-aux-frontieres-de-l-europe_938564
+
+- id: poudat_explorer_2017
+  abstract: "À destination des linguistes, cet ouvrage fait le point sur les méthodes et les outils indispensables à l’exploitation de corpus numériques. Avec le virage numérique, les pratiques du linguiste ont sensiblement évolué. Décrire des discours et des usages ou mettre en évidence des phénomènes linguistiques particuliers passe de plus en plus par l’exploitation de corpus numériques pour mettre à l’épreuve ses hypothèses. Cette pratique fait appel à de nombreux procédés, pour lesquels des repères méthodologiques s’avèrent indispensables\_: quelle méthode choisir pour quel objectif de recherche\_? Pourquoi annoter un corpus\_? Comment mettre au jour sa structure, ou dégager ses spécificités\_? Quels sont les outils mobilisables\_? L’originalité de cet ouvrage est de proposer à l’analyste, de manière pratique et située, un ensemble de repères méthodologiques en lien avec les usages et les outils d’exploration de corpus les plus mobilisés dans le champ linguistique français. Il s’appuie sur un contexte institutionnel et des réflexions collectives menées dans le cadre d’un groupe de travail sur l’exploration de corpus et balise les méthodes présentées d’exemples concrets de recherches et d’outils exploitables."
+  accessed:
+    - year: 2020
+      month: 6
+      day: 29
+  author:
+    - family: Poudat
+      given: Céline
+    - family: Landragin
+      given: Frédéric
+  DOI: 10.3917/dbu.pouda.2017.01
+  ISBN: 978-2-8073-0563-2
+  issued:
+    - year: 2017
+  language: fr
+  publisher: De Boeck Supérieur
+  source: www-cairn-info.acces-distant.sciencespo.fr
+  title: Explorer un corpus textuel
+  type: book
+  URL: >-
+    https://www-cairn-info.acces-distant.sciencespo.fr/explorer-un-corpus-textuel--9782807305632.htm
+
+- id: schaeffer-lacroix_preparer_2018
+  abstract: >-
+    Ce texte renseigne sur les gestes à faire afin de pouvoir importer un corpus
+    dans TXM.
+  accessed:
+    - year: 2020
+      month: 6
+      day: 28
+  author:
+    - family: Schaeffer-Lacroix
+      given: Eva
+  issued:
+    - year: 2018
+      month: 1
+      day: 5
+  language: fr-FR
+  source: HAL Archives Ouvertes
+  title: Préparer un corpus pour TXM
+  type: book
+  URL: 'https://hal.archives-ouvertes.fr/hal-01676053'
+...
