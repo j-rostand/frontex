@@ -1,0 +1,13 @@
+Frontex would like to invite interested researchers and practitioners to attend the Workshop on Innovation in Border Control to be held in Odense (DK) on 22-23 August. 
+
+Co-located with the European Intelligence and Security Informatics Conference (http://www.eisic.eu/), the workshop is jointly organized by Frontex, the European Commission's Joint Research Centre (JRC), and the National Center for Border Security and Immigration (Borders), University of Arizona (USA). 
+
+The objective of the event is to bring together academic researchers, practitioners, industry consultants, and information technology companies to:
+-   discuss innovative solutions to current and future challenges in border control (including border surveillance),
+-   present the latest results of research in the field of border control,
+-   evaluate current applications, and
+-   identify next steps toward bringing solutions to fruition.
+
+Please find the final program at this link https://wibc2012.jrc.ec.europa.eu/WIBC_files/program.html
+
+To register, please find the instructions here https://wibc2012.jrc.ec.europa.eu/WIBC_files/registration.html

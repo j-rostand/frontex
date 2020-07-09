@@ -1,0 +1,32 @@
+The conference report summarises the discussions and
+key conclusions reached at the Second Global Conference and Exhibition on
+future developments in Automated Border Control (ABC), co-organised by Frontex
+and the European Commission on 10-11 October 2013 in Warsaw. Further
+information about the conference is available at http://frontex.europa.eu/news/abc-conference-and-exhibition-6QJ0JK The conference
+highlighted that the traditional border-control
+model faces important challenges, resulting from increasing travel flows and
+changing travel patterns. Within this context, new state-of-the-art technological
+solutions can help promote more effective and efficient border controls. However, technology is not an end in itself but a
+means to serve policy objectives. The European Commission drives forward the
+policy work needed to further develop EU integrated border management with the
+support of Frontex on the operational side, while eu-LISA, the EU Agency for
+large-scale IT systems, manages the technical implementation of new border
+management systems. The success of ABC deployments depends, crucially, on
+gaining passengers’ acceptance and reaching high levels of usage. This requires
+that, in the design of ABC solutions, the passenger should always be kept at
+the heart of the process. Another success factor concerns the establishment of close
+cooperation and mutual trust, notably between border management authorities and
+airport operators. Such trust presupposes the recognition of a common interest
+in facilitating passenger flows. But ABC deployments are not merely an efficiency
+issue. Border management technologies have important societal implications and
+data protection authorities should be involved in the design and implementation
+of ABC solutions. Citizens should remain confident that their biometric data
+are properly handled. Also importantly, the role of the “human factor” of
+border guards continues to be essential in the operation of ABC systems. ABC is
+not about replacing the border guard with technology, but about providing a
+tool to support their work. Finally, ABC itself is not enough — it is only one
+step of the travel process. The future lies in integrated solutions which rely
+on the handling of data in order to facilitate passenger flows and maintain the
+border security. 
+For a more comprehensive and detailed summary of the
+topics discussed, please download the full conference report here.

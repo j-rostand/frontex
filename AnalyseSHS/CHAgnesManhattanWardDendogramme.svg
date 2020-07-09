@@ -1,0 +1,581 @@
+<svg version="1.1"
+     baseProfile="full"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     xmlns:ev="http://www.w3.org/2001/xml-events"
+     width="722.70" height="578.16"
+     viewBox="0,0,722.70,578.16"
+     font-family="Arial, Helvetica, sans-serif"
+     onload='Init(evt)'
+>
+<title>R SVG Plot</title>
+<desc>R SVG Plot with tooltips! (mode=1)</desc>
+<script type="text/ecmascript"><![CDATA[
+    var SVGDocument = null;
+    var SVGRoot = null;
+    var SVGViewBox = null;
+    var svgns = 'http://www.w3.org/2000/svg';
+    var xlinkns = 'http://www.w3.org/1999/xlink';
+    var toolTip = null;
+    var TrueCoords = null;
+    var tipBox = null;
+    var tipText = null;
+    var tipTitle = null;
+    var tipDesc = null;
+
+    var lastElement = null;
+    var titleText = '';
+    var titleDesc = '';
+
+
+    function Init(evt)
+    {
+       SVGDocument = evt.target.ownerDocument;
+       SVGRoot = SVGDocument.documentElement;
+       TrueCoords = SVGRoot.createSVGPoint();
+
+       toolTip = SVGDocument.getElementById('ToolTip');
+       tipBox = SVGDocument.getElementById('tipbox');
+       tipText = SVGDocument.getElementById('tipText');
+       tipText.setAttributeNS(null, 'font-family', 'Arial, sans-serif' );
+       tipTitle = SVGDocument.getElementById('tipTitle');
+       tipDesc = SVGDocument.getElementById('tipDesc');
+       //window.status = (TrueCoords);
+
+       //create event for object
+       SVGRoot.addEventListener('mousemove', ShowTooltip, false);
+       SVGRoot.addEventListener('mouseout', HideTooltip, false);
+    };
+
+
+    function GetTrueCoords(evt)
+    {
+       // find the current zoom level and pan setting, and adjust the reported
+       //    mouse position accordingly
+       var newScale = SVGRoot.currentScale;
+       var translation = SVGRoot.currentTranslate;
+       TrueCoords.x = (evt.clientX - translation.x)/newScale;
+       TrueCoords.y = (evt.clientY - translation.y)/newScale;
+    };
+
+
+    function HideTooltip( evt )
+    {
+       toolTip.setAttributeNS(null, 'visibility', 'hidden');
+    };
+
+
+    function ShowTooltip( evt )
+    {
+       GetTrueCoords( evt );
+
+       var tipScale = 1/SVGRoot.currentScale;
+       var textWidth = 0;
+       var tspanWidth = 0;
+       var boxHeight = 20;
+
+       tipBox.setAttributeNS(null, 'transform', 'scale(' + tipScale + ',' + tipScale + ')' );
+       tipText.setAttributeNS(null, 'transform', 'scale(' + tipScale + ',' + tipScale + ')' );
+
+       var titleValue = '';
+       var descValue = '';
+       var targetElement = evt.target;
+       if ( lastElement != targetElement )
+       {
+          var targetTitle = targetElement.getElementsByTagNameNS(svgns, 'title').item(0);
+          if ( targetTitle )
+          {
+             // if there is a 'title' element, use its contents for the tooltip title
+             titleValue = targetTitle.firstChild.nodeValue;
+          }
+
+          var targetDesc = targetElement.getElementsByTagNameNS(svgns, 'desc').item(0);
+          if ( targetDesc )
+          {
+             // if there is a 'desc' element, use its contents for the tooltip desc
+             descValue = targetDesc.firstChild.nodeValue;
+
+             if ( '' == titleValue )
+             {
+                // if there is no 'title' element, use the contents of the 'desc' element for the tooltip title instead
+                titleValue = descValue;
+                descValue = '';
+             }
+          }
+
+          // if there is still no 'title' element, use the contents of the 'id' attribute for the tooltip title
+          if ( '' == titleValue )
+          {
+             titleValue = targetElement.getAttributeNS(null, 'id');
+          }
+
+          // selectively assign the tooltip title and desc the proper values,
+          //   and hide those which don't have text values
+          //
+          var titleDisplay = 'none';
+          if ( '' != titleValue )
+          {
+             tipTitle.firstChild.nodeValue = titleValue;
+             titleDisplay = 'inline';
+          }
+          tipTitle.setAttributeNS(null, 'display', titleDisplay );
+
+
+          var descDisplay = 'none';
+          if ( '' != descValue )
+          {
+             tipDesc.firstChild.nodeValue = descValue;
+             descDisplay = 'inline';
+          }
+          tipDesc.setAttributeNS(null, 'display', descDisplay );
+       }
+
+       // if there are tooltip contents to be displayed, adjust the size and position of the box
+       if ( '' != titleValue )
+       {
+          var xPos = TrueCoords.x + (10 * tipScale);
+          var yPos = TrueCoords.y + (10 * tipScale);
+
+          //return rectangle around text as SVGRect object
+          var outline = tipText.getBBox();
+          tipBox.setAttributeNS(null, 'width', Number(outline.width) + 10);
+          tipBox.setAttributeNS(null, 'height', Number(outline.height) + 10);
+
+          // update position
+          toolTip.setAttributeNS(null, 'transform', 'translate(' + xPos + ',' + yPos + ')');
+          toolTip.setAttributeNS(null, 'visibility', 'visible');
+       }
+    };
+
+   ]]></script>
+<rect width="100%" height="100%" style="fill:#FFFFFF"/>
+<text transform="translate(70.00,482.10)  rotate(-90)" fill="#000000"  style="font-size:4pt" >the</text>
+<text transform="translate(73.00,493.25)  rotate(-90)" fill="#000000"  style="font-size:4pt" >xCTotal</text>
+<polyline points="68.70 , 470.41 68.70 , 465.55 71.70 , 465.55 71.70 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(76.01,485.32)  rotate(-90)" fill="#000000"  style="font-size:4pt" >from</text>
+<polyline points="70.20 , 465.55 70.20 , 459.54 74.71 , 459.54 74.71 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(79.01,492.58)  rotate(-90)" fill="#000000"  style="font-size:4pt" >Frontex</text>
+<text transform="translate(82.01,483.58)  rotate(-90)" fill="#000000"  style="font-size:4pt" >The</text>
+<polyline points="77.71 , 470.41 77.71 , 460.47 80.71 , 460.47 80.71 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(85.02,480.42)  rotate(-90)" fill="#000000"  style="font-size:4pt" >by</text>
+<text transform="translate(88.02,484.45)  rotate(-90)" fill="#000000"  style="font-size:4pt" >also</text>
+<polyline points="83.72 , 470.41 83.72 , 458.28 86.72 , 458.28 86.72 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="79.21 , 460.47 79.21 , 454.98 85.22 , 454.98 85.22 , 458.28 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="72.45 , 459.54 72.45 , 454.49 82.22 , 454.49 82.22 , 454.98 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(91.03,484.79)  rotate(-90)" fill="#000000"  style="font-size:4pt" >This</text>
+<polyline points="77.33 , 454.49 77.33 , 447.21 89.73 , 447.21 89.73 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(94.03,484.45)  rotate(-90)" fill="#000000"  style="font-size:4pt" >with</text>
+<text transform="translate(97.04,484.38)  rotate(-90)" fill="#000000"  style="font-size:4pt" >was</text>
+<polyline points="92.73 , 470.41 92.73 , 458.18 95.74 , 458.18 95.74 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(100.04,483.24)  rotate(-90)" fill="#000000"  style="font-size:4pt" >two</text>
+<polyline points="94.24 , 458.18 94.24 , 445.12 98.74 , 445.12 98.74 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="83.53 , 447.21 83.53 , 438.92 96.49 , 438.92 96.49 , 445.12 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(103.05,479.28)  rotate(-90)" fill="#000000"  style="font-size:4pt" >at</text>
+<text transform="translate(106.05,499.17)  rotate(-90)" fill="#000000"  style="font-size:4pt" >authorities</text>
+<polyline points="101.75 , 470.41 101.75 , 450.66 104.75 , 450.66 104.75 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="90.01 , 438.92 90.01 , 436.24 103.25 , 436.24 103.25 , 450.66 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(109.06,479.28)  rotate(-90)" fill="#000000"  style="font-size:4pt" >of</text>
+<text transform="translate(112.06,477.60)  rotate(-90)" fill="#000000"  style="font-size:4pt" >a</text>
+<polyline points="107.76 , 470.41 107.76 , 457.92 110.76 , 457.92 110.76 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(115.07,479.28)  rotate(-90)" fill="#000000"  style="font-size:4pt" >to</text>
+<polyline points="109.26 , 457.92 109.26 , 456.71 113.77 , 456.71 113.77 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(118.07,478.81)  rotate(-90)" fill="#000000"  style="font-size:4pt" >in</text>
+<text transform="translate(121.08,480.42)  rotate(-90)" fill="#000000"  style="font-size:4pt" >on</text>
+<polyline points="116.77 , 470.41 116.77 , 458.68 119.78 , 458.68 119.78 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="111.51 , 456.71 111.51 , 454.33 118.28 , 454.33 118.28 , 458.68 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(124.08,482.30)  rotate(-90)" fill="#000000"  style="font-size:4pt" >EU</text>
+<text transform="translate(127.09,480.42)  rotate(-90)" fill="#000000"  style="font-size:4pt" >an</text>
+<polyline points="122.78 , 470.41 122.78 , 453.13 125.79 , 453.13 125.79 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="114.89 , 454.33 114.89 , 447.87 124.29 , 447.87 124.29 , 453.13 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(130.09,483.24)  rotate(-90)" fill="#000000"  style="font-size:4pt" >and</text>
+<text transform="translate(133.10,480.96)  rotate(-90)" fill="#000000"  style="font-size:4pt" >for</text>
+<polyline points="128.79 , 470.41 128.79 , 462.73 131.80 , 462.73 131.80 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(136.10,489.42)  rotate(-90)" fill="#000000"  style="font-size:4pt" >border</text>
+<polyline points="130.29 , 462.73 130.29 , 458.22 134.80 , 458.22 134.80 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(139.11,482.37)  rotate(-90)" fill="#000000"  style="font-size:4pt" >will</text>
+<polyline points="132.55 , 458.22 132.55 , 447.62 137.81 , 447.62 137.81 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="119.59 , 447.87 119.59 , 442.03 135.18 , 442.03 135.18 , 447.62 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="96.63 , 436.24 96.63 , 422.45 127.38 , 422.45 127.38 , 442.03 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(142.11,495.87)  rotate(-90)" fill="#000000"  style="font-size:4pt" >activities</text>
+<text transform="translate(145.12,492.99)  rotate(-90)" fill="#000000"  style="font-size:4pt" >national</text>
+<text transform="translate(148.12,483.24)  rotate(-90)" fill="#000000"  style="font-size:4pt" >can</text>
+<polyline points="143.82 , 470.41 143.82 , 448.64 146.82 , 448.64 146.82 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="140.81 , 470.41 140.81 , 441.19 145.32 , 441.19 145.32 , 448.64 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(151.13,496.28)  rotate(-90)" fill="#000000"  style="font-size:4pt" >countries</text>
+<text transform="translate(154.13,504.95)  rotate(-90)" fill="#000000"  style="font-size:4pt" >management</text>
+<polyline points="149.83 , 470.41 149.83 , 447.21 152.83 , 447.21 152.83 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="143.07 , 441.19 143.07 , 425.60 151.33 , 425.60 151.33 , 447.21 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(157.14,484.38)  rotate(-90)" fill="#000000"  style="font-size:4pt" >new</text>
+<text transform="translate(160.14,484.85)  rotate(-90)" fill="#000000"  style="font-size:4pt" >time</text>
+<polyline points="155.84 , 470.41 155.84 , 449.63 158.84 , 449.63 158.84 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(163.15,491.71)  rotate(-90)" fill="#000000"  style="font-size:4pt" >agency</text>
+<polyline points="157.34 , 449.63 157.34 , 423.07 161.85 , 423.07 161.85 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="147.20 , 425.60 147.20 , 403.38 159.59 , 403.38 159.59 , 423.07 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="112.01 , 422.45 112.01 , 392.84 153.39 , 392.84 153.39 , 403.38 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(166.15,483.31)  rotate(-90)" fill="#000000"  style="font-size:4pt" >this</text>
+<text transform="translate(169.16,486.60)  rotate(-90)" fill="#000000"  style="font-size:4pt" >three</text>
+<polyline points="164.85 , 470.41 164.85 , 453.94 167.86 , 453.94 167.86 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(172.16,488.08)  rotate(-90)" fill="#000000"  style="font-size:4pt" >illegal</text>
+<polyline points="166.35 , 453.94 166.35 , 444.06 170.86 , 444.06 170.86 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(175.16,492.25)  rotate(-90)" fill="#000000"  style="font-size:4pt" >support</text>
+<text transform="translate(178.17,486.06)  rotate(-90)" fill="#000000"  style="font-size:4pt" >work</text>
+<polyline points="173.86 , 470.41 173.86 , 457.28 176.87 , 457.28 176.87 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(181.17,493.93)  rotate(-90)" fill="#000000"  style="font-size:4pt" >together</text>
+<polyline points="175.37 , 457.28 175.37 , 445.33 179.87 , 445.33 179.87 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="168.61 , 444.06 168.61 , 436.93 177.62 , 436.93 177.62 , 445.33 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(184.18,484.99)  rotate(-90)" fill="#000000"  style="font-size:4pt" >their</text>
+<text transform="translate(187.18,480.02)  rotate(-90)" fill="#000000"  style="font-size:4pt" >all</text>
+<text transform="translate(190.19,480.42)  rotate(-90)" fill="#000000"  style="font-size:4pt" >up</text>
+<polyline points="185.88 , 470.41 185.88 , 448.63 188.89 , 448.63 188.89 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="182.88 , 470.41 182.88 , 439.67 187.39 , 439.67 187.39 , 448.63 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(193.19,495.81)  rotate(-90)" fill="#000000"  style="font-size:4pt" >nationals</text>
+<polyline points="185.13 , 439.67 185.13 , 434.67 191.89 , 434.67 191.89 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="173.11 , 436.93 173.11 , 413.18 188.51 , 413.18 188.51 , 434.67 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(196.20,482.10)  rotate(-90)" fill="#000000"  style="font-size:4pt" >our</text>
+<text transform="translate(199.20,488.42)  rotate(-90)" fill="#000000"  style="font-size:4pt" >Union</text>
+<polyline points="194.90 , 470.41 194.90 , 443.57 197.90 , 443.57 197.90 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(202.21,483.24)  rotate(-90)" fill="#000000"  style="font-size:4pt" >sea</text>
+<polyline points="196.40 , 443.57 196.40 , 435.79 200.91 , 435.79 200.91 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="180.81 , 413.18 180.81 , 400.09 198.65 , 400.09 198.65 , 435.79 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="132.70 , 392.84 132.70 , 378.54 189.73 , 378.54 189.73 , 400.09 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(205.21,480.42)  rotate(-90)" fill="#000000"  style="font-size:4pt" >as</text>
+<text transform="translate(208.22,483.98)  rotate(-90)" fill="#000000"  style="font-size:4pt" >well</text>
+<polyline points="203.91 , 470.41 203.91 , 458.75 206.92 , 458.75 206.92 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(211.22,488.28)  rotate(-90)" fill="#000000"  style="font-size:4pt" >future</text>
+<polyline points="205.42 , 458.75 205.42 , 447.04 209.92 , 447.04 209.92 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(214.23,495.34)  rotate(-90)" fill="#000000"  style="font-size:4pt" >including</text>
+<text transform="translate(217.23,486.06)  rotate(-90)" fill="#000000"  style="font-size:4pt" >such</text>
+<polyline points="212.93 , 470.41 212.93 , 440.73 215.93 , 440.73 215.93 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="207.67 , 447.04 207.67 , 434.16 214.43 , 434.16 214.43 , 440.73 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(220.24,478.81)  rotate(-90)" fill="#000000"  style="font-size:4pt" >is</text>
+<text transform="translate(223.24,484.45)  rotate(-90)" fill="#000000"  style="font-size:4pt" >only</text>
+<polyline points="218.94 , 470.41 218.94 , 453.17 221.94 , 453.17 221.94 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(226.25,483.78)  rotate(-90)" fill="#000000"  style="font-size:4pt" >that</text>
+<text transform="translate(229.25,482.10)  rotate(-90)" fill="#000000"  style="font-size:4pt" >are</text>
+<polyline points="224.95 , 470.41 224.95 , 457.04 227.95 , 457.04 227.95 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="220.44 , 453.17 220.44 , 444.05 226.45 , 444.05 226.45 , 457.04 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(232.26,500.31)  rotate(-90)" fill="#000000"  style="font-size:4pt" >operational</text>
+<polyline points="223.44 , 444.05 223.44 , 435.43 230.96 , 435.43 230.96 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="211.05 , 434.16 211.05 , 413.01 227.20 , 413.01 227.20 , 435.43 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(235.26,486.60)  rotate(-90)" fill="#000000"  style="font-size:4pt" >other</text>
+<text transform="translate(238.27,482.10)  rotate(-90)" fill="#000000"  style="font-size:4pt" >but</text>
+<polyline points="233.96 , 470.41 233.96 , 453.96 236.97 , 453.96 236.97 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(241.27,494.53)  rotate(-90)" fill="#000000"  style="font-size:4pt" >xC&#160;2014</text>
+<polyline points="235.46 , 453.96 235.46 , 448.47 239.97 , 448.47 239.97 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(244.28,482.10)  rotate(-90)" fill="#000000"  style="font-size:4pt" >not</text>
+<text transform="translate(247.28,487.74)  rotate(-90)" fill="#000000"  style="font-size:4pt" >these</text>
+<polyline points="242.98 , 470.41 242.98 , 440.14 245.98 , 440.14 245.98 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="237.72 , 448.47 237.72 , 429.71 244.48 , 429.71 244.48 , 440.14 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(250.29,488.95)  rotate(-90)" fill="#000000"  style="font-size:4pt" >during</text>
+<text transform="translate(253.29,496.21)  rotate(-90)" fill="#000000"  style="font-size:4pt" >migration</text>
+<polyline points="248.99 , 470.41 248.99 , 441.06 251.99 , 441.06 251.99 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="241.10 , 429.71 241.10 , 404.41 250.49 , 404.41 250.49 , 441.06 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="219.12 , 413.01 219.12 , 401.09 245.79 , 401.09 245.79 , 404.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(256.30,504.01)  rotate(-90)" fill="#000000"  style="font-size:4pt" >Commission</text>
+<text transform="translate(259.30,494.53)  rotate(-90)" fill="#000000"  style="font-size:4pt" >xC&#160;2012</text>
+<polyline points="255.00 , 470.41 255.00 , 442.80 258.00 , 442.80 258.00 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(262.30,494.06)  rotate(-90)" fill="#000000"  style="font-size:4pt" >Warsaw</text>
+<polyline points="256.50 , 442.80 256.50 , 416.29 261.00 , 416.29 261.00 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="232.46 , 401.09 232.46 , 386.67 258.75 , 386.67 258.75 , 416.29 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="161.22 , 378.54 161.22 , 339.20 245.60 , 339.20 245.60 , 386.67 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(265.31,496.28)  rotate(-90)" fill="#000000"  style="font-size:4pt" >operation</text>
+<text transform="translate(268.31,476.45)  rotate(-90)" fill="#000000"  style="font-size:4pt" >I</text>
+<polyline points="264.01 , 470.41 264.01 , 441.36 267.01 , 441.36 267.01 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(271.32,481.56)  rotate(-90)" fill="#000000"  style="font-size:4pt" >we</text>
+<polyline points="265.51 , 441.36 265.51 , 430.67 270.02 , 430.67 270.02 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(274.32,483.24)  rotate(-90)" fill="#000000"  style="font-size:4pt" >one</text>
+<text transform="translate(277.33,477.66)  rotate(-90)" fill="#000000"  style="font-size:4pt" >it</text>
+<polyline points="273.02 , 470.41 273.02 , 444.48 276.03 , 444.48 276.03 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(280.33,502.66)  rotate(-90)" fill="#000000"  style="font-size:4pt" >surveillance</text>
+<polyline points="274.53 , 444.48 274.53 , 431.87 279.03 , 431.87 279.03 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="267.77 , 430.67 267.77 , 416.05 276.78 , 416.05 276.78 , 431.87 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(283.34,493.66)  rotate(-90)" fill="#000000"  style="font-size:4pt" >Member</text>
+<text transform="translate(286.34,490.16)  rotate(-90)" fill="#000000"  style="font-size:4pt" >States</text>
+<polyline points="282.04 , 470.41 282.04 , 464.29 285.04 , 464.29 285.04 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(289.35,482.10)  rotate(-90)" fill="#000000"  style="font-size:4pt" >out</text>
+<text transform="translate(292.35,494.53)  rotate(-90)" fill="#000000"  style="font-size:4pt" >xC&#160;2007</text>
+<polyline points="288.05 , 470.41 288.05 , 440.34 291.05 , 440.34 291.05 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="283.54 , 464.29 283.54 , 428.55 289.55 , 428.55 289.55 , 440.34 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="272.27 , 416.05 272.27 , 406.68 286.55 , 406.68 286.55 , 428.55 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="203.41 , 339.20 203.41 , 303.27 279.41 , 303.27 279.41 , 406.68 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(295.36,486.06)  rotate(-90)" fill="#000000"  style="font-size:4pt" >were</text>
+<text transform="translate(298.36,484.99)  rotate(-90)" fill="#000000"  style="font-size:4pt" >Italy</text>
+<polyline points="294.06 , 470.41 294.06 , 446.17 297.06 , 446.17 297.06 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(301.37,486.06)  rotate(-90)" fill="#000000"  style="font-size:4pt" >have</text>
+<text transform="translate(304.37,486.06)  rotate(-90)" fill="#000000"  style="font-size:4pt" >been</text>
+<polyline points="300.07 , 470.41 300.07 , 450.00 303.07 , 450.00 303.07 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(307.38,488.42)  rotate(-90)" fill="#000000"  style="font-size:4pt" >which</text>
+<polyline points="301.57 , 450.00 301.57 , 441.23 306.08 , 441.23 306.08 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="295.56 , 446.17 295.56 , 428.94 303.82 , 428.94 303.82 , 441.23 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(310.38,492.25)  rotate(-90)" fill="#000000"  style="font-size:4pt" >borders</text>
+<text transform="translate(313.39,483.24)  rotate(-90)" fill="#000000"  style="font-size:4pt" >has</text>
+<polyline points="309.08 , 470.41 309.08 , 451.42 312.09 , 451.42 312.09 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(316.39,493.46)  rotate(-90)" fill="#000000"  style="font-size:4pt" >external</text>
+<polyline points="310.58 , 451.42 310.58 , 447.42 315.09 , 447.42 315.09 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(319.40,491.78)  rotate(-90)" fill="#000000"  style="font-size:4pt" >provide</text>
+<polyline points="312.84 , 447.42 312.84 , 444.05 318.10 , 444.05 318.10 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="299.69 , 428.94 299.69 , 425.46 315.47 , 425.46 315.47 , 444.05 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(322.40,493.46)  rotate(-90)" fill="#000000"  style="font-size:4pt" >Director</text>
+<text transform="translate(325.41,498.16)  rotate(-90)" fill="#000000"  style="font-size:4pt" >Executive</text>
+<polyline points="321.10 , 470.41 321.10 , 465.66 324.11 , 465.66 324.11 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(328.41,483.78)  rotate(-90)" fill="#000000"  style="font-size:4pt" >part</text>
+<text transform="translate(331.42,484.45)  rotate(-90)" fill="#000000"  style="font-size:4pt" >said</text>
+<polyline points="327.11 , 470.41 327.11 , 442.55 330.12 , 442.55 330.12 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="322.60 , 465.66 322.60 , 440.62 328.61 , 440.62 328.61 , 442.55 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(334.42,480.42)  rotate(-90)" fill="#000000"  style="font-size:4pt" >he</text>
+<polyline points="325.61 , 440.62 325.61 , 422.25 333.12 , 422.25 333.12 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(337.43,499.10)  rotate(-90)" fill="#000000"  style="font-size:4pt" >operations</text>
+<text transform="translate(340.43,495.74)  rotate(-90)" fill="#000000"  style="font-size:4pt" >deployed</text>
+<polyline points="336.13 , 470.41 336.13 , 437.57 339.13 , 437.57 339.13 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(343.44,487.61)  rotate(-90)" fill="#000000"  style="font-size:4pt" >some</text>
+<polyline points="337.63 , 437.57 337.63 , 428.78 342.14 , 428.78 342.14 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="329.36 , 422.25 329.36 , 414.66 339.88 , 414.66 339.88 , 428.78 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="307.58 , 425.46 307.58 , 396.31 334.62 , 396.31 334.62 , 414.66 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(346.44,489.02)  rotate(-90)" fill="#000000"  style="font-size:4pt" >Italian</text>
+<text transform="translate(349.44,494.60)  rotate(-90)" fill="#000000"  style="font-size:4pt" >increase</text>
+<polyline points="345.14 , 470.41 345.14 , 433.68 348.14 , 433.68 348.14 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(352.45,484.92)  rotate(-90)" fill="#000000"  style="font-size:4pt" >over</text>
+<polyline points="346.64 , 433.68 346.64 , 398.41 351.15 , 398.41 351.15 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="321.10 , 396.31 321.10 , 367.01 348.90 , 367.01 348.90 , 398.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(355.45,499.10)  rotate(-90)" fill="#000000"  style="font-size:4pt" >detections</text>
+<text transform="translate(358.46,488.95)  rotate(-90)" fill="#000000"  style="font-size:4pt" >region</text>
+<polyline points="354.15 , 470.41 354.15 , 433.30 357.16 , 433.30 357.16 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(361.46,490.90)  rotate(-90)" fill="#000000"  style="font-size:4pt" >Turkey</text>
+<text transform="translate(364.47,486.47)  rotate(-90)" fill="#000000"  style="font-size:4pt" >most</text>
+<text transform="translate(367.47,493.39)  rotate(-90)" fill="#000000"  style="font-size:4pt" >October</text>
+<polyline points="363.17 , 470.41 363.17 , 442.98 366.17 , 442.98 366.17 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="360.16 , 470.41 360.16 , 428.73 364.67 , 428.73 364.67 , 442.98 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(370.48,491.10)  rotate(-90)" fill="#000000"  style="font-size:4pt" >quarter</text>
+<polyline points="362.42 , 428.73 362.42 , 411.47 369.18 , 411.47 369.18 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="355.66 , 433.30 355.66 , 409.76 365.80 , 409.76 365.80 , 411.47 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(373.48,497.42)  rotate(-90)" fill="#000000"  style="font-size:4pt" >Operation</text>
+<text transform="translate(376.49,486.13)  rotate(-90)" fill="#000000"  style="font-size:4pt" >Joint</text>
+<polyline points="372.18 , 470.41 372.18 , 424.31 375.19 , 424.31 375.19 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(379.49,484.45)  rotate(-90)" fill="#000000"  style="font-size:4pt" >land</text>
+<text transform="translate(382.50,494.53)  rotate(-90)" fill="#000000"  style="font-size:4pt" >xC&#160;2010</text>
+<polyline points="378.19 , 470.41 378.19 , 429.48 381.20 , 429.48 381.20 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(385.50,493.52)  rotate(-90)" fill="#000000"  style="font-size:4pt" >irregular</text>
+<polyline points="379.70 , 429.48 379.70 , 403.47 384.20 , 403.47 384.20 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(388.51,484.92)  rotate(-90)" fill="#000000"  style="font-size:4pt" >area</text>
+<text transform="translate(391.51,477.60)  rotate(-90)" fill="#000000"  style="font-size:4pt" >1</text>
+<polyline points="387.21 , 470.41 387.21 , 427.60 390.21 , 427.60 390.21 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(394.52,477.60)  rotate(-90)" fill="#000000"  style="font-size:4pt" >2</text>
+<text transform="translate(397.52,494.53)  rotate(-90)" fill="#000000"  style="font-size:4pt" >xC&#160;2011</text>
+<polyline points="393.22 , 470.41 393.22 , 440.03 396.22 , 440.03 396.22 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(400.53,485.66)  rotate(-90)" fill="#000000"  style="font-size:4pt" >level</text>
+<polyline points="394.72 , 440.03 394.72 , 429.21 399.23 , 429.21 399.23 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="388.71 , 427.60 388.71 , 416.96 396.97 , 416.96 396.97 , 429.21 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="381.95 , 403.47 381.95 , 397.72 392.84 , 397.72 392.84 , 416.96 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="373.69 , 424.31 373.69 , 356.58 387.40 , 356.58 387.40 , 397.72 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="360.73 , 409.76 360.73 , 346.63 380.54 , 346.63 380.54 , 356.58 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="335.00 , 367.01 335.00 , 308.17 370.63 , 308.17 370.63 , 346.63 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="241.41 , 303.27 241.41 , 252.71 352.82 , 252.71 352.82 , 308.17 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(403.53,490.57)  rotate(-90)" fill="#000000"  style="font-size:4pt" >guards</text>
+<text transform="translate(406.54,492.92)  rotate(-90)" fill="#000000"  style="font-size:4pt" >working</text>
+<polyline points="402.23 , 470.41 402.23 , 431.05 405.24 , 431.05 405.24 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(409.54,494.53)  rotate(-90)" fill="#000000"  style="font-size:4pt" >between</text>
+<polyline points="403.73 , 431.05 403.73 , 425.38 408.24 , 425.38 408.24 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(412.55,487.27)  rotate(-90)" fill="#000000"  style="font-size:4pt" >place</text>
+<text transform="translate(415.55,498.09)  rotate(-90)" fill="#000000"  style="font-size:4pt" >Schengen</text>
+<polyline points="411.25 , 470.41 411.25 , 441.46 414.25 , 441.46 414.25 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="405.99 , 425.38 405.99 , 415.10 412.75 , 415.10 412.75 , 441.46 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(418.56,503.20)  rotate(-90)" fill="#000000"  style="font-size:4pt" >international</text>
+<text transform="translate(421.56,495.74)  rotate(-90)" fill="#000000"  style="font-size:4pt" >agencies</text>
+<polyline points="417.26 , 470.41 417.26 , 437.52 420.26 , 437.52 420.26 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="409.37 , 415.10 409.37 , 407.73 418.76 , 407.73 418.76 , 437.52 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(424.57,501.92)  rotate(-90)" fill="#000000"  style="font-size:4pt" >cooperation</text>
+<text transform="translate(427.57,494.53)  rotate(-90)" fill="#000000"  style="font-size:4pt" >xC&#160;2009</text>
+<polyline points="423.27 , 470.41 423.27 , 440.03 426.27 , 440.03 426.27 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(430.58,498.03)  rotate(-90)" fill="#000000"  style="font-size:4pt" >trafficking</text>
+<text transform="translate(433.58,490.43)  rotate(-90)" fill="#000000"  style="font-size:4pt" >human</text>
+<polyline points="429.28 , 470.41 429.28 , 434.51 432.28 , 434.51 432.28 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="424.77 , 440.03 424.77 , 423.77 430.78 , 423.77 430.78 , 434.51 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="414.06 , 407.73 414.06 , 367.51 427.77 , 367.51 427.77 , 423.77 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(436.58,484.52)  rotate(-90)" fill="#000000"  style="font-size:4pt" >joint</text>
+<text transform="translate(439.59,494.53)  rotate(-90)" fill="#000000"  style="font-size:4pt" >xC&#160;2008</text>
+<polyline points="435.28 , 470.41 435.28 , 432.73 438.29 , 432.73 438.29 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(442.59,491.84)  rotate(-90)" fill="#000000"  style="font-size:4pt" >training</text>
+<polyline points="436.79 , 432.73 436.79 , 404.81 441.29 , 404.81 441.29 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(445.60,494.53)  rotate(-90)" fill="#000000"  style="font-size:4pt" >xC&#160;2006</text>
+<polyline points="439.04 , 404.81 439.04 , 397.44 444.30 , 397.44 444.30 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="420.92 , 367.51 420.92 , 351.19 441.67 , 351.19 441.67 , 397.44 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(448.60,492.99)  rotate(-90)" fill="#000000"  style="font-size:4pt" >Laitinen</text>
+<polyline points="431.29 , 351.19 431.29 , 335.52 447.30 , 335.52 447.30 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="297.11 , 252.71 297.11 , 223.98 439.30 , 223.98 439.30 , 335.52 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(451.61,480.42)  rotate(-90)" fill="#000000"  style="font-size:4pt" >be</text>
+<text transform="translate(454.61,479.28)  rotate(-90)" fill="#000000"  style="font-size:4pt" >or</text>
+<polyline points="450.31 , 470.41 450.31 , 449.72 453.31 , 449.72 453.31 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(457.62,494.53)  rotate(-90)" fill="#000000"  style="font-size:4pt" >xC&#160;2013</text>
+<polyline points="451.81 , 449.72 451.81 , 445.29 456.32 , 445.29 456.32 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(460.62,490.63)  rotate(-90)" fill="#000000"  style="font-size:4pt" >control</text>
+<polyline points="454.06 , 445.29 454.06 , 441.31 459.32 , 441.31 459.32 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(463.63,500.71)  rotate(-90)" fill="#000000"  style="font-size:4pt" >information</text>
+<polyline points="456.69 , 441.31 456.69 , 435.18 462.33 , 435.18 462.33 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(466.63,504.61)  rotate(-90)" fill="#000000"  style="font-size:4pt" >development</text>
+<polyline points="459.51 , 435.18 459.51 , 420.11 465.33 , 420.11 465.33 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(469.64,484.92)  rotate(-90)" fill="#000000"  style="font-size:4pt" >data</text>
+<polyline points="462.42 , 420.11 462.42 , 408.73 468.34 , 408.73 468.34 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(472.64,492.25)  rotate(-90)" fill="#000000"  style="font-size:4pt" >experts</text>
+<text transform="translate(475.65,483.31)  rotate(-90)" fill="#000000"  style="font-size:4pt" >risk</text>
+<polyline points="471.34 , 470.41 471.34 , 440.51 474.35 , 440.51 474.35 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(478.65,495.81)  rotate(-90)" fill="#000000"  style="font-size:4pt" >technical</text>
+<polyline points="472.85 , 440.51 472.85 , 426.86 477.35 , 426.86 477.35 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="465.38 , 408.73 465.38 , 396.42 475.10 , 396.42 475.10 , 426.86 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(481.66,486.06)  rotate(-90)" fill="#000000"  style="font-size:4pt" >2013</text>
+<polyline points="470.24 , 396.42 470.24 , 285.10 480.36 , 285.10 480.36 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(484.66,486.06)  rotate(-90)" fill="#000000"  style="font-size:4pt" >2011</text>
+<polyline points="475.30 , 285.10 475.30 , 241.34 483.36 , 241.34 483.36 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="368.21 , 223.98 368.21 , 175.44 479.33 , 175.44 479.33 , 241.34 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(487.67,495.00)  rotate(-90)" fill="#000000"  style="font-size:4pt" >migrants</text>
+<text transform="translate(490.67,494.53)  rotate(-90)" fill="#000000"  style="font-size:4pt" >xC&#160;2015</text>
+<polyline points="486.37 , 470.41 486.37 , 450.27 489.37 , 450.27 489.37 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(493.68,477.60)  rotate(-90)" fill="#000000"  style="font-size:4pt" >0</text>
+<polyline points="487.87 , 450.27 487.87 , 444.16 492.38 , 444.16 492.38 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(496.68,490.10)  rotate(-90)" fill="#000000"  style="font-size:4pt" >people</text>
+<polyline points="490.12 , 444.16 490.12 , 429.97 495.38 , 429.97 495.38 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(499.69,492.31)  rotate(-90)" fill="#000000"  style="font-size:4pt" >officers</text>
+<text transform="translate(502.69,484.38)  rotate(-90)" fill="#000000"  style="font-size:4pt" >who</text>
+<polyline points="498.39 , 470.41 498.39 , 442.06 501.39 , 442.06 501.39 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="492.75 , 429.97 492.75 , 415.40 499.89 , 415.40 499.89 , 442.06 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(505.70,491.78)  rotate(-90)" fill="#000000"  style="font-size:4pt" >Leggeri</text>
+<text transform="translate(508.70,492.11)  rotate(-90)" fill="#000000"  style="font-size:4pt" >Fabrice</text>
+<polyline points="504.40 , 470.41 504.40 , 456.06 507.40 , 456.06 507.40 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="496.32 , 415.40 496.32 , 398.94 505.90 , 398.94 505.90 , 456.06 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(511.71,492.11)  rotate(-90)" fill="#000000"  style="font-size:4pt" >number</text>
+<text transform="translate(514.71,484.92)  rotate(-90)" fill="#000000"  style="font-size:4pt" >than</text>
+<polyline points="510.41 , 470.41 510.41 , 451.11 513.41 , 451.11 513.41 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(517.72,486.47)  rotate(-90)" fill="#000000"  style="font-size:4pt" >more</text>
+<polyline points="511.91 , 451.11 511.91 , 447.45 516.42 , 447.45 516.42 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(520.72,494.60)  rotate(-90)" fill="#000000"  style="font-size:4pt" >Western</text>
+<text transform="translate(523.72,494.53)  rotate(-90)" fill="#000000"  style="font-size:4pt" >xC&#160;2016</text>
+<polyline points="519.42 , 470.41 519.42 , 443.74 522.42 , 443.74 522.42 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="514.16 , 447.45 514.16 , 436.52 520.92 , 436.52 520.92 , 443.74 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="501.11 , 398.94 501.11 , 388.07 517.54 , 388.07 517.54 , 436.52 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(526.73,488.89)  rotate(-90)" fill="#000000"  style="font-size:4pt" >Greek</text>
+<text transform="translate(529.73,491.71)  rotate(-90)" fill="#000000"  style="font-size:4pt" >Greece</text>
+<polyline points="525.43 , 470.41 525.43 , 446.36 528.43 , 446.36 528.43 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(532.74,486.06)  rotate(-90)" fill="#000000"  style="font-size:4pt" >2015</text>
+<text transform="translate(535.74,491.31)  rotate(-90)" fill="#000000"  style="font-size:4pt" >islands</text>
+<polyline points="531.44 , 470.41 531.44 , 445.04 534.44 , 445.04 534.44 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="526.93 , 446.36 526.93 , 379.30 532.94 , 379.30 532.94 , 445.04 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(538.75,492.92)  rotate(-90)" fill="#000000"  style="font-size:4pt" >vessels</text>
+<text transform="translate(541.75,490.57)  rotate(-90)" fill="#000000"  style="font-size:4pt" >rescue</text>
+<polyline points="537.45 , 470.41 537.45 , 440.22 540.45 , 440.22 540.45 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="529.94 , 379.30 529.94 , 365.99 538.95 , 365.99 538.95 , 440.22 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="509.33 , 388.07 509.33 , 349.74 534.44 , 349.74 534.44 , 365.99 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(544.76,480.49)  rotate(-90)" fill="#000000"  style="font-size:4pt" >its</text>
+<text transform="translate(547.76,479.28)  rotate(-90)" fill="#000000"  style="font-size:4pt" >In</text>
+<polyline points="543.46 , 470.41 543.46 , 445.36 546.46 , 445.36 546.46 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(550.77,487.21)  rotate(-90)" fill="#000000"  style="font-size:4pt" >week</text>
+<polyline points="544.96 , 445.36 544.96 , 438.58 549.47 , 438.58 549.47 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(553.77,487.74)  rotate(-90)" fill="#000000"  style="font-size:4pt" >about</text>
+<polyline points="547.21 , 438.58 547.21 , 433.52 552.47 , 433.52 552.47 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(556.78,484.92)  rotate(-90)" fill="#000000"  style="font-size:4pt" >year</text>
+<text transform="translate(559.78,487.61)  rotate(-90)" fill="#000000"  style="font-size:4pt" >same</text>
+<polyline points="555.48 , 470.41 555.48 , 445.78 558.48 , 445.78 558.48 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(562.79,483.31)  rotate(-90)" fill="#000000"  style="font-size:4pt" >last</text>
+<polyline points="556.98 , 445.78 556.98 , 441.77 561.49 , 441.77 561.49 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(565.79,491.78)  rotate(-90)" fill="#000000"  style="font-size:4pt" >Central</text>
+<polyline points="559.23 , 441.77 559.23 , 441.27 564.49 , 441.27 564.49 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="549.84 , 433.52 549.84 , 418.51 561.86 , 418.51 561.86 , 441.27 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(568.80,496.68)  rotate(-90)" fill="#000000"  style="font-size:4pt" >migratory</text>
+<text transform="translate(571.80,483.31)  rotate(-90)" fill="#000000"  style="font-size:4pt" >into</text>
+<text transform="translate(574.81,494.53)  rotate(-90)" fill="#000000"  style="font-size:4pt" >xC&#160;2018</text>
+<polyline points="570.50 , 470.41 570.50 , 440.50 573.51 , 440.50 573.51 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="567.50 , 470.41 567.50 , 433.40 572.00 , 433.40 572.00 , 440.50 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(577.81,504.95)  rotate(-90)" fill="#000000"  style="font-size:4pt" >Management</text>
+<text transform="translate(580.82,486.00)  rotate(-90)" fill="#000000"  style="font-size:4pt" >main</text>
+<polyline points="576.51 , 470.41 576.51 , 445.13 579.52 , 445.13 579.52 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="569.75 , 433.40 569.75 , 411.88 578.01 , 411.88 578.01 , 445.13 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="555.85 , 418.51 555.85 , 398.62 573.88 , 398.62 573.88 , 411.88 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(583.82,495.07)  rotate(-90)" fill="#000000"  style="font-size:4pt" >detected</text>
+<text transform="translate(586.83,507.97)  rotate(-90)" fill="#000000"  style="font-size:4pt" >Mediterranean</text>
+<polyline points="582.52 , 470.41 582.52 , 445.59 585.53 , 445.59 585.53 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(589.83,488.95)  rotate(-90)" fill="#000000"  style="font-size:4pt" >period</text>
+<polyline points="584.02 , 445.59 584.02 , 442.95 588.53 , 442.95 588.53 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(592.84,483.85)  rotate(-90)" fill="#000000"  style="font-size:4pt" >first</text>
+<text transform="translate(595.84,478.13)  rotate(-90)" fill="#000000"  style="font-size:4pt" >It</text>
+<polyline points="591.54 , 470.41 591.54 , 441.10 594.54 , 441.10 594.54 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="586.28 , 442.95 586.28 , 428.04 593.04 , 428.04 593.04 , 441.10 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(598.85,491.31)  rotate(-90)" fill="#000000"  style="font-size:4pt" >Europe</text>
+<text transform="translate(601.85,494.53)  rotate(-90)" fill="#000000"  style="font-size:4pt" >xC&#160;2020</text>
+<polyline points="597.55 , 470.41 597.55 , 438.45 600.55 , 438.45 600.55 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="589.66 , 428.04 589.66 , 407.15 599.05 , 407.15 599.05 , 438.45 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(604.86,486.60)  rotate(-90)" fill="#000000"  style="font-size:4pt" >route</text>
+<text transform="translate(607.86,492.99)  rotate(-90)" fill="#000000"  style="font-size:4pt" >Eastern</text>
+<polyline points="603.56 , 470.41 603.56 , 434.25 606.56 , 434.25 606.56 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(610.86,479.55)  rotate(-90)" fill="#000000"  style="font-size:4pt" >%</text>
+<polyline points="605.06 , 434.25 605.06 , 427.66 609.56 , 427.66 609.56 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(613.87,492.11)  rotate(-90)" fill="#000000"  style="font-size:4pt" >months</text>
+<text transform="translate(616.87,489.29)  rotate(-90)" fill="#000000"  style="font-size:4pt" >month</text>
+<polyline points="612.57 , 470.41 612.57 , 442.26 615.57 , 442.26 615.57 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="607.31 , 427.66 607.31 , 413.65 614.07 , 413.65 614.07 , 442.26 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(619.88,494.60)  rotate(-90)" fill="#000000"  style="font-size:4pt" >previous</text>
+<text transform="translate(622.88,484.99)  rotate(-90)" fill="#000000"  style="font-size:4pt" >total</text>
+<polyline points="618.58 , 470.41 618.58 , 424.88 621.58 , 424.88 621.58 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="610.69 , 413.65 610.69 , 399.52 620.08 , 399.52 620.08 , 424.88 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="594.35 , 407.15 594.35 , 383.20 615.39 , 383.20 615.39 , 399.52 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="564.87 , 398.62 564.87 , 342.90 604.87 , 342.90 604.87 , 383.20 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(625.89,496.95)  rotate(-90)" fill="#000000"  style="font-size:4pt" >European</text>
+<text transform="translate(628.89,494.53)  rotate(-90)" fill="#000000"  style="font-size:4pt" >xC&#160;2019</text>
+<polyline points="624.59 , 470.41 624.59 , 455.41 627.59 , 455.41 627.59 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(631.90,492.45)  rotate(-90)" fill="#000000"  style="font-size:4pt" >Agency</text>
+<polyline points="626.09 , 455.41 626.09 , 434.71 630.60 , 434.71 630.60 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(634.90,490.16)  rotate(-90)" fill="#000000"  style="font-size:4pt" >Border</text>
+<text transform="translate(637.91,493.46)  rotate(-90)" fill="#000000"  style="font-size:4pt" >security</text>
+<text transform="translate(640.91,494.53)  rotate(-90)" fill="#000000"  style="font-size:4pt" >xC&#160;2017</text>
+<polyline points="636.61 , 470.41 636.61 , 443.20 639.61 , 443.20 639.61 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="633.60 , 470.41 633.60 , 441.45 638.11 , 441.45 638.11 , 443.20 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="628.34 , 434.71 628.34 , 427.63 635.86 , 427.63 635.86 , 441.45 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(643.92,487.74)  rotate(-90)" fill="#000000"  style="font-size:4pt" >coast</text>
+<polyline points="632.10 , 427.63 632.10 , 414.90 642.62 , 414.90 642.62 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(646.92,487.74)  rotate(-90)" fill="#000000"  style="font-size:4pt" >guard</text>
+<polyline points="637.36 , 414.90 637.36 , 403.55 645.62 , 403.55 645.62 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(649.93,488.89)  rotate(-90)" fill="#000000"  style="font-size:4pt" >Guard</text>
+<text transform="translate(652.93,488.89)  rotate(-90)" fill="#000000"  style="font-size:4pt" >Coast</text>
+<polyline points="648.63 , 470.41 648.63 , 453.52 651.63 , 453.52 651.63 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(655.94,497.42)  rotate(-90)" fill="#000000"  style="font-size:4pt" >crossings</text>
+<text transform="translate(658.94,489.42)  rotate(-90)" fill="#000000"  style="font-size:4pt" >routes</text>
+<polyline points="654.64 , 470.41 654.64 , 428.95 657.64 , 428.95 657.64 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="650.13 , 453.52 650.13 , 408.96 656.14 , 408.96 656.14 , 428.95 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="641.49 , 403.55 641.49 , 346.49 653.13 , 346.49 653.13 , 408.96 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="584.87 , 342.90 584.87 , 321.57 647.31 , 321.57 647.31 , 346.49 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(661.95,489.63)  rotate(-90)" fill="#000000"  style="font-size:4pt" >Forum</text>
+<text transform="translate(664.95,504.27)  rotate(-90)" fill="#000000"  style="font-size:4pt" >Consultative</text>
+<polyline points="660.65 , 470.41 660.65 , 463.34 663.65 , 463.34 663.65 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(667.96,504.95)  rotate(-90)" fill="#000000"  style="font-size:4pt" >Fundamental</text>
+<text transform="translate(670.96,490.10)  rotate(-90)" fill="#000000"  style="font-size:4pt" >Rights</text>
+<polyline points="666.66 , 470.41 666.66 , 455.79 669.66 , 455.79 669.66 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(673.97,503.47)  rotate(-90)" fill="#000000"  style="font-size:4pt" >fundamental</text>
+<text transform="translate(676.97,487.81)  rotate(-90)" fill="#000000"  style="font-size:4pt" >rights</text>
+<polyline points="672.67 , 470.41 672.67 , 432.38 675.67 , 432.38 675.67 , 470.41 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="668.16 , 455.79 668.16 , 390.72 674.17 , 390.72 674.17 , 432.38 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="662.15 , 463.34 662.15 , 387.04 671.16 , 387.04 671.16 , 390.72 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="616.09 , 321.57 616.09 , 249.65 666.66 , 249.65 666.66 , 387.04 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="521.88 , 349.74 521.88 , 139.08 641.37 , 139.08 641.37 , 249.65 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="423.77 , 175.44 423.77 , 62.14 581.63 , 62.14 581.63 , 139.08 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<line x1="44.42" y1="470.41" x2="44.42" y2="44.42" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<line x1="44.42" y1="470.41" x2="39.00" y2="470.41" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<line x1="44.42" y1="360.34" x2="39.00" y2="360.34" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<line x1="44.42" y1="250.27" x2="39.00" y2="250.27" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<line x1="44.42" y1="140.20" x2="39.00" y2="140.20" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(33.58,473.93)  rotate(-90)" fill="#000000"  style="font-size:10pt" >0</text>
+<text transform="translate(33.58,363.86)  rotate(-90)" fill="#000000"  style="font-size:10pt" >1</text>
+<text transform="translate(33.58,253.79)  rotate(-90)" fill="#000000"  style="font-size:10pt" >2</text>
+<text transform="translate(33.58,143.72)  rotate(-90)" fill="#000000"  style="font-size:10pt" >3</text>
+<text transform="translate(218.06,28.71) " fill="#000000"  style="font-size:12pt" >Classement&#160;hierarchiques&#160;des&#160;coordonnees</text>
+<text transform="translate(273.40,577.08) " fill="#000000"  style="font-size:10pt" >Agglomerative&#160;Coefficient&#160;=&#160;&#160;0.93</text>
+<text transform="translate(350.93,566.24) " fill="#000000"  style="font-size:10pt" >tableau</text>
+<text transform="translate(11.92,302.82)  rotate(-90)" fill="#000000"  style="font-size:10pt" >Height</text>
+<polyline points="67.67 , 522.91 67.67 , 199.71 448.30 , 199.71 448.30 , 522.91 67.67 , 522.91 " stroke-width="1px" stroke="#FF0000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="449.29 , 522.91 449.29 , 199.71 484.35 , 199.71 484.35 , 522.91 449.29 , 522.91 " stroke-width="1px" stroke="#FF0000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="485.35 , 522.91 485.35 , 199.71 541.45 , 199.71 541.45 , 522.91 485.35 , 522.91 " stroke-width="1px" stroke="#FF0000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<polyline points="542.44 , 522.91 542.44 , 199.71 676.66 , 199.71 676.66 , 522.91 542.44 , 522.91 " stroke-width="1px" stroke="#FF0000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<g id='ToolTip' opacity='1' visibility='hidden' pointer-events='none'>
+   <rect id='tipbox' x='0' y='5' width='88' height='16' rx='2' ry='2' fill='white' stroke='black'/>
+   <text id='tipText' x='5' y='16' font-family='Arial' font-size='8pt' fill='blue'>
+      <tspan id='tipTitle' x='5' font-weight='bold' fill='black'><![CDATA[]]></tspan>
+      <tspan id='tipDesc' x='5' dy='10'><![CDATA[]]></tspan>
+   </text>
+</g>
+</svg>

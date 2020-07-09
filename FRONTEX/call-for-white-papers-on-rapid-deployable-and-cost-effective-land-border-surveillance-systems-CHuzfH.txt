@@ -1,0 +1,80 @@
+
+General considerations
+At the core of Frontex’s research
+and development (R&D) work is exploration of the potential offered by new
+border management technologies to meet the dual objective of enhancing security
+while facilitating travel. The Agency proactively monitors and contributes to
+developments in research relevant to the control and surveillance of the
+external borders. Frontex also keeps Member States and the European Commission
+up to date with developments. 
+Effective border control has to
+strike a balance between facilitating the movement of an increasing number of
+travellers across borders, and promoting greater security for European
+citizens. Innovative technologies, which are nowadays developing at an
+unprecedented pace, can provide valuable help to border management authorities to
+do their job more efficiently. Yet this important goal requires that border
+control technologies focus on addressing key challenges. They also need to be
+sufficiently flexible to adapt to changing circumstances and diverse conditions
+along the EU external border, and meet the needs of the border guard community.
+Moreover, in an EU with no internal border controls and with common external
+borders, another key challenge lies in fostering interoperability, i.e. the
+ability of different systems and national authorities to work together.
+Frontex plays a key role in bridging
+the gap between producers and end users, making sure that the research and
+development community has a clear picture of the needs and challenges faced
+daily at the EU’s borders. The agency facilitates information exchange between
+border management authorities, research institutes, universities and industry,
+via the organisation of projects, workshops and conferences. It also informs EU
+research programmes under the Security Theme of the Seventh Framework Programme
+for research and technological development (FP7) and provides input for policy
+development.
+In addition, Frontex is very active
+in driving the process of harmonisation and development of best practices and
+standards in border control, both operational and technical, in line with
+existing and future EU measures.
+Border management covers all
+activities carried out at the external border to address the issue of irregular
+migration. Yet the nature of the actions related to, and the technologies
+applied for border surveillance (between authorised Border Crossing Points,
+BCPs) and for border checks (at BCPs) are quite different. In order to cater
+for these different needs, Frontex research and development activities have
+been organised into two programmes, a border checks programme and a border
+surveillance programme.
+Specific considerations
+One of the objectives of the Frontex’s R&D
+Unit for 2013 is to create a network/working group of experts of the Member
+States Border Authorities, specialized in the field of land border surveillance
+(Land Border Surveillance Working Group). For this year the Working Group will
+be focused on showcasing the existing practices and technologies in use for
+land border surveillance (in the Member States where the experts are coming
+from). Another priority will be the development of a set of minimum
+requirements for possible rapid deployable, cost-effective land border
+surveillance systems to be tested in Frontex joint operations 2014. 
+In order to support the activity of the Member
+States’ experts, there is a need of providing them with information on the
+Industry’s latest achievements in cost-effective and fast deployable land
+border surveillance systems. 
+On these lines, Frontex launches the present call for papers, inviting
+Industry to send to landsurwg@frontex.europa.eu
+and to Zdravko Kolev at zdravko.kolev@frontex.europa.eu, by10 May 2013, detailed technical
+presentations together with a white paper (pdf/word format, containing
+technical specifications, descriptions, relevant pictures) of its latest
+achievements/advanced technical solutions in this domain. The technical
+solutions will consist of combinations of at least the following types of
+sensor: radars, electro-optic sensors, unattended ground sensors, communication
+systems capable to transmit in near real time the situational picture and warnings
+on remote terminals.
+Frontex will not publish the papers received.
+They will be used as support documentation during the activity of the mentioned
+Working Group. 
+After analyzing the Industry’s submissions,
+four to six companies in the field of land border surveillance technology will
+be invited to present their submission to the Land Border Surveillance Working
+Group in October 2013. The submitters will be informed on a decision, by email,
+by June 2013. 
+Please note
+that the papers submitted by industry will be selected on a
+first-come-first-served basis and their representatives might be invited to
+present them. The invitees are to cover by themselves the costs related to the
+participation in presentation.
+

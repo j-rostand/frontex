@@ -1,0 +1,105 @@
+
+SUBMISSION DEADLINE: 29 April 2013
+The Workshop on Innovation in Border Control 2013 (WIBC 2013), 
+co-organized by Frontex Research and Development Unit, the Joint 
+Research Centre (JRC) of the European Commission,  and the National 
+Center for Border Security and Immigration (BORDERS) of the University 
+of Arizona, is soliciting both research and “industrial practice and 
+experience” papers.
+
+The aim of the Workshop is to bring together academic researchers, practitioners, and industry to:
+- discuss innovative solutions to current and future challenges in border control (including border surveillance),
+- present the latest results of research in the field of border control,
+- evaluate current applications,
+- identify next steps toward bringing solutions to fruition, and
+- disseminate information on ongoing border security-related research projects and initiatives.
+
+Possible topics of the papers are:
+
+1. Detection, identification and authentication
+
+CHALLENGES: (A) An ever-increasing number of people coming to the EU 
+poses a challenge of having less time for the entire process of person 
+and document authentication and/verification, and efficiently detecting 
+the “risky” ones, which should undergo a more thorough check; (B) 
+Various types of insignificant-in-size maritime means are used by 
+third-country nationals to enter into the EU in an irregular manner. 
+Timely detection and classification of such means, in particular 
+differentiating between suspicious and legitimate ones, poses a serious 
+challenge.
+
+•   Access control: authentication of documents, people and vehicles
+•   Risk assessment of travelers (prior and upon arrival)
+•   Deception detection
+•   Modelling and optimization of the border control processing chain
+•   Detection and risk-level classification of both large and small (fast) boats in maritime environment
+•   Detection of persons attempting to enter illegally
+•   Long range maritime positive identification of facilitators in poor optical conditions
+•   Psycho-physiological and behavioural detection of risk
+•   Small and wide land area intruder detection
+
+2. Communication  
+CHALLENGE: An increasing field-cooperation between Border Guard 
+authorities of (neighbouring) countries is often hindered by 
+non-compatible mobile secure communication networks that could be used 
+to exchange data of various kind (videos, images, text) in a 
+straightforward and efficient manner.
+
+•   Efficient transfer of high volume of data, including video and 
+images, from mobile (manned or unmanned) platforms to end users, and 
+vice versa from operations centres to field assets
+•   Ergonomic and user-friendly wireless mobile communication tools
+•   Interconnection of secure communication networks of border guard 
+authorities in neighbouring countries, including technical and legal 
+aspects
+
+3. Information sharing and interoperability  
+CHALLENGE: An ever-growing requirement to exchange border 
+security-related information of various kind at the EU-level poses a 
+challenge in terms of: (a) making existing systems interoperable, (b) 
+willingness to share information “across the sectors and borders”, (c) 
+having a common understanding of the content to be shared.
+
+•   Platforms and systems for secure exchange of information
+•   Collaboration across cultures, or the effects of culture and legal and organizational constraints on information sharing 
+•   Techniques to facilitate the exchange of information between non interoperable information systems
+•   Integrated visa/immigration facilities control systems
+•   Interoperability for information exchange: protocols, schemes, 
+ontologies, topologies, semantic translations and common definitions of 
+content
+4. Information acquisition, fusion and utilisation
+
+CHALLENGE: The ever-growing amount of heterogeneous border 
+security-related data stemming from different sources of varying 
+reliability makes it difficult to efficiently process, analyse, fuse and
+ convert it into actionable knowledge.
+
+•   Real-time and near real-time text/data mining methods for processing vast amount of heterogeneous data
+•   Techniques for data/information fusion (text, video, images, etc.) in real or close to real time
+•   Trend analysis, pattern detection, cross-analysis of databases, optimisation analysis
+•   Utilisation of new sources of information (e.g., open sources) for 
+intelligence gathering and situational awareness (e.g., online news, 
+social media, forums, deep web), including assessment of their quality, 
+usefulness, reliability, and techniques to analyze them
+•   Usability of new type of information in the border security-related decision making process
+•   Intelligence-based risk assessment, threat classification and vulnerability assessment models
+
+5. Technology impact, acceptance and integration
+
+CHALLENGE: Various new technologies with border control application 
+potential are emerging, however, their integration into the border 
+control processing chain poses administrative, technical, societal, 
+privacy and human-machine optimisation issues.
+
+•   Assessment of user acceptance
+•   Data Protection, Fundamental rights and social impacts of use of technology at the border
+•   Analysis of factors that may hinder introduction of new technologies (legal, organizational, societal)
+•   Ergonomic impacts of use of technology at the border
+•   Human-system optimization
+•   Methods for diffusing and integrating new technology
+•   Comparison of technology solutions (opportunity/risk analysis)
+•   Modelling, simulation and training capabilities for border control (virtual environments)  
+
+The research event will be co-located with the European Intelligence and Security Informatics Conference (http://www.eisic.eu/) and will take place in Uppsala (Sweden) on 13-14 August 2013.
+
+For more information on the call for papers and the event, please refer to the following link: http://wibc2013.org/index.html

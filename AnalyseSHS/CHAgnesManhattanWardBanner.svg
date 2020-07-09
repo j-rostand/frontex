@@ -1,0 +1,586 @@
+<svg version="1.1"
+     baseProfile="full"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     xmlns:ev="http://www.w3.org/2001/xml-events"
+     width="722.70" height="578.16"
+     viewBox="0,0,722.70,578.16"
+     font-family="Arial, Helvetica, sans-serif"
+     onload='Init(evt)'
+>
+<title>R SVG Plot</title>
+<desc>R SVG Plot with tooltips! (mode=1)</desc>
+<script type="text/ecmascript"><![CDATA[
+    var SVGDocument = null;
+    var SVGRoot = null;
+    var SVGViewBox = null;
+    var svgns = 'http://www.w3.org/2000/svg';
+    var xlinkns = 'http://www.w3.org/1999/xlink';
+    var toolTip = null;
+    var TrueCoords = null;
+    var tipBox = null;
+    var tipText = null;
+    var tipTitle = null;
+    var tipDesc = null;
+
+    var lastElement = null;
+    var titleText = '';
+    var titleDesc = '';
+
+
+    function Init(evt)
+    {
+       SVGDocument = evt.target.ownerDocument;
+       SVGRoot = SVGDocument.documentElement;
+       TrueCoords = SVGRoot.createSVGPoint();
+
+       toolTip = SVGDocument.getElementById('ToolTip');
+       tipBox = SVGDocument.getElementById('tipbox');
+       tipText = SVGDocument.getElementById('tipText');
+       tipText.setAttributeNS(null, 'font-family', 'Arial, sans-serif' );
+       tipTitle = SVGDocument.getElementById('tipTitle');
+       tipDesc = SVGDocument.getElementById('tipDesc');
+       //window.status = (TrueCoords);
+
+       //create event for object
+       SVGRoot.addEventListener('mousemove', ShowTooltip, false);
+       SVGRoot.addEventListener('mouseout', HideTooltip, false);
+    };
+
+
+    function GetTrueCoords(evt)
+    {
+       // find the current zoom level and pan setting, and adjust the reported
+       //    mouse position accordingly
+       var newScale = SVGRoot.currentScale;
+       var translation = SVGRoot.currentTranslate;
+       TrueCoords.x = (evt.clientX - translation.x)/newScale;
+       TrueCoords.y = (evt.clientY - translation.y)/newScale;
+    };
+
+
+    function HideTooltip( evt )
+    {
+       toolTip.setAttributeNS(null, 'visibility', 'hidden');
+    };
+
+
+    function ShowTooltip( evt )
+    {
+       GetTrueCoords( evt );
+
+       var tipScale = 1/SVGRoot.currentScale;
+       var textWidth = 0;
+       var tspanWidth = 0;
+       var boxHeight = 20;
+
+       tipBox.setAttributeNS(null, 'transform', 'scale(' + tipScale + ',' + tipScale + ')' );
+       tipText.setAttributeNS(null, 'transform', 'scale(' + tipScale + ',' + tipScale + ')' );
+
+       var titleValue = '';
+       var descValue = '';
+       var targetElement = evt.target;
+       if ( lastElement != targetElement )
+       {
+          var targetTitle = targetElement.getElementsByTagNameNS(svgns, 'title').item(0);
+          if ( targetTitle )
+          {
+             // if there is a 'title' element, use its contents for the tooltip title
+             titleValue = targetTitle.firstChild.nodeValue;
+          }
+
+          var targetDesc = targetElement.getElementsByTagNameNS(svgns, 'desc').item(0);
+          if ( targetDesc )
+          {
+             // if there is a 'desc' element, use its contents for the tooltip desc
+             descValue = targetDesc.firstChild.nodeValue;
+
+             if ( '' == titleValue )
+             {
+                // if there is no 'title' element, use the contents of the 'desc' element for the tooltip title instead
+                titleValue = descValue;
+                descValue = '';
+             }
+          }
+
+          // if there is still no 'title' element, use the contents of the 'id' attribute for the tooltip title
+          if ( '' == titleValue )
+          {
+             titleValue = targetElement.getAttributeNS(null, 'id');
+          }
+
+          // selectively assign the tooltip title and desc the proper values,
+          //   and hide those which don't have text values
+          //
+          var titleDisplay = 'none';
+          if ( '' != titleValue )
+          {
+             tipTitle.firstChild.nodeValue = titleValue;
+             titleDisplay = 'inline';
+          }
+          tipTitle.setAttributeNS(null, 'display', titleDisplay );
+
+
+          var descDisplay = 'none';
+          if ( '' != descValue )
+          {
+             tipDesc.firstChild.nodeValue = descValue;
+             descDisplay = 'inline';
+          }
+          tipDesc.setAttributeNS(null, 'display', descDisplay );
+       }
+
+       // if there are tooltip contents to be displayed, adjust the size and position of the box
+       if ( '' != titleValue )
+       {
+          var xPos = TrueCoords.x + (10 * tipScale);
+          var yPos = TrueCoords.y + (10 * tipScale);
+
+          //return rectangle around text as SVGRect object
+          var outline = tipText.getBBox();
+          tipBox.setAttributeNS(null, 'width', Number(outline.width) + 10);
+          tipBox.setAttributeNS(null, 'height', Number(outline.height) + 10);
+
+          // update position
+          toolTip.setAttributeNS(null, 'transform', 'translate(' + xPos + ',' + yPos + ')');
+          toolTip.setAttributeNS(null, 'visibility', 'visible');
+       }
+    };
+
+   ]]></script>
+<rect width="100%" height="100%" style="fill:#FFFFFF"/>
+<rect x="50.91" y="502.99" width="60.46" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="111.36" y="502.99" width="588.59" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="500.80" width="126.68" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="177.58" y="500.80" width="522.37" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="498.61" width="23.24" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="74.15" y="498.61" width="625.80" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="496.41" width="132.53" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="183.44" y="496.41" width="516.51" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="494.22" width="11.23" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="62.14" y="494.22" width="637.81" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="492.03" width="350.94" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="401.85" y="492.03" width="298.10" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="489.83" width="65.91" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="116.81" y="489.83" width="583.14" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="487.64" width="97.68" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="148.58" y="487.64" width="551.37" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="485.45" width="26.85" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="77.75" y="485.45" width="622.20" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="483.25" width="196.99" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="247.90" y="483.25" width="452.05" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="481.06" width="106.29" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="157.20" y="481.06" width="542.75" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="478.87" width="88.24" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="139.14" y="478.87" width="560.81" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="476.67" width="43.24" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="94.15" y="476.67" width="605.80" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="474.48" width="46.04" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="96.94" y="474.48" width="603.01" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="472.29" width="68.00" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="118.91" y="472.29" width="581.04" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="470.10" width="56.75" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="107.66" y="470.10" width="592.29" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="467.90" width="23.84" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="74.74" y="467.90" width="625.21" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="465.71" width="236.60" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="287.51" y="465.71" width="412.44" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="463.52" width="72.37" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="123.28" y="463.52" width="576.67" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="461.32" width="112.69" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="163.60" y="461.32" width="536.35" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="459.13" width="44.74" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="95.65" y="459.13" width="604.30" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="456.94" width="90.23" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="141.13" y="456.94" width="558.82" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="454.74" width="67.96" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="118.87" y="454.74" width="581.08" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="452.55" width="57.49" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="108.39" y="452.55" width="591.56" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="450.36" width="138.64" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="189.55" y="450.36" width="510.40" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="448.16" width="50.80" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="101.71" y="448.16" width="598.24" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="445.97" width="100.56" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="151.47" y="445.97" width="548.48" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="443.78" width="46.59" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="97.50" y="443.78" width="602.45" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="441.58" width="67.35" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="118.26" y="441.58" width="581.69" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="439.39" width="43.64" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="94.55" y="439.39" width="605.40" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="437.20" width="39.45" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="90.36" y="437.20" width="609.59" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="435.00" width="202.70" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="253.61" y="435.00" width="446.34" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="432.81" width="40.19" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="91.09" y="432.81" width="608.86" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="430.62" width="93.04" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="143.95" y="430.62" width="556.00" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="428.42" width="47.54" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="98.45" y="428.42" width="601.50" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="426.23" width="58.83" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="109.73" y="426.23" width="590.22" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="424.04" width="114.12" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="165.02" y="424.04" width="534.93" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="421.84" width="46.32" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="97.22" y="421.84" width="602.73" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="419.65" width="45.53" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="96.44" y="419.65" width="603.51" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="417.46" width="39.15" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="90.06" y="417.46" width="609.89" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="415.26" width="82.50" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="133.40" y="415.26" width="566.55" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="413.07" width="58.63" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="109.54" y="413.07" width="590.41" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="410.88" width="50.60" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="101.51" y="410.88" width="598.44" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="408.68" width="39.81" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="90.72" y="408.68" width="609.23" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="406.49" width="526.73" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="577.64" y="406.49" width="122.31" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="404.30" width="47.98" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="98.89" y="404.30" width="601.06" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="402.10" width="165.99" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="216.89" y="402.10" width="483.06" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="399.91" width="40.33" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="91.24" y="399.91" width="608.71" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="397.72" width="144.83" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="195.74" y="397.72" width="504.21" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="395.52" width="38.23" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="89.13" y="395.52" width="610.82" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="393.33" width="191.83" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="242.73" y="393.33" width="457.22" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="391.14" width="42.39" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="93.30" y="391.14" width="606.65" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="388.94" width="53.87" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="104.77" y="388.94" width="595.18" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="386.75" width="36.50" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="87.41" y="386.75" width="612.54" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="384.56" width="30.68" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="81.59" y="384.56" width="618.36" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="382.36" width="130.89" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="181.80" y="382.36" width="518.15" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="380.17" width="22.81" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="73.72" y="380.17" width="626.23" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="377.98" width="113.61" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="164.52" y="377.98" width="535.43" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="375.78" width="45.07" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="95.97" y="375.78" width="603.98" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="373.59" width="87.44" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="138.35" y="373.59" width="561.60" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="371.40" width="64.28" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="115.19" y="371.40" width="584.76" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="369.20" width="41.72" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="92.63" y="369.20" width="607.32" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="367.01" width="32.01" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="82.91" y="367.01" width="617.04" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="364.82" width="649.04" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="699.95" y="364.82" width="0.00" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="362.62" width="364.15" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="415.06" y="362.62" width="284.89" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="360.43" width="294.58" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="345.49" y="360.43" width="354.46" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="358.24" width="69.22" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="120.13" y="358.24" width="579.82" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="356.04" width="47.53" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="98.44" y="356.04" width="601.51" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="353.85" width="117.62" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="168.53" y="353.85" width="531.42" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="351.66" width="98.04" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="148.95" y="351.66" width="551.00" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="349.46" width="79.96" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="130.87" y="349.46" width="569.08" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="347.27" width="56.00" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="106.91" y="347.27" width="593.04" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="345.08" width="46.25" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="97.16" y="345.08" width="602.79" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="342.88" width="39.93" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="90.83" y="342.88" width="609.12" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="340.69" width="32.88" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="83.79" y="340.69" width="616.16" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="338.50" width="468.93" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="519.83" y="338.50" width="180.12" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="336.30" width="214.43" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="265.34" y="336.30" width="434.61" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="334.11" width="116.00" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="166.91" y="334.11" width="533.04" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="331.92" width="104.28" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="155.19" y="331.92" width="544.76" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="329.72" width="59.89" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="110.80" y="329.72" width="589.15" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="327.53" width="189.52" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="240.42" y="327.53" width="459.53" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="325.34" width="57.06" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="107.97" y="325.34" width="591.98" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="323.14" width="74.14" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="125.05" y="323.14" width="574.90" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="320.95" width="48.29" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="99.20" y="320.95" width="600.75" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="318.76" width="163.58" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="214.49" y="318.76" width="485.46" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="316.56" width="52.27" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="103.18" y="316.56" width="596.77" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="314.37" width="99.64" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="150.55" y="314.37" width="549.40" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="312.18" width="46.02" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="96.93" y="312.18" width="603.02" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="309.98" width="87.93" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="138.83" y="309.98" width="561.12" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="307.79" width="71.59" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="122.49" y="307.79" width="577.46" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="305.60" width="62.57" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="113.48" y="305.60" width="586.47" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="303.40" width="391.76" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="442.67" y="303.40" width="257.28" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="301.21" width="65.50" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="116.40" y="301.21" width="583.55" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="299.02" width="48.28" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="99.19" y="299.02" width="600.76" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="296.82" width="84.96" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="135.87" y="296.82" width="564.08" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="294.63" width="68.06" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="118.96" y="294.63" width="580.99" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="292.44" width="115.55" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="166.46" y="292.44" width="533.49" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="290.24" width="106.41" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="157.32" y="290.24" width="542.63" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="288.05" width="65.07" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="115.97" y="288.05" width="583.98" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="285.86" width="180.96" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="231.86" y="285.86" width="468.09" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="283.66" width="73.28" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="124.19" y="283.66" width="575.76" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="281.47" width="196.77" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="247.67" y="281.47" width="452.28" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="279.28" width="93.69" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="144.60" y="279.28" width="555.35" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="277.08" width="43.60" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="94.51" y="277.08" width="605.44" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="274.89" width="66.25" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="117.16" y="274.89" width="582.79" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="272.70" width="96.42" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="147.33" y="272.70" width="552.62" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="270.50" width="58.98" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="109.89" y="270.50" width="590.06" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="268.31" width="257.91" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="308.82" y="268.31" width="391.13" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="266.12" width="114.46" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="165.37" y="266.12" width="534.58" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="263.92" width="58.38" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="109.29" y="263.92" width="590.66" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="261.73" width="164.38" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="215.29" y="261.73" width="484.66" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="259.54" width="66.17" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="117.07" y="259.54" width="582.88" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="257.34" width="52.20" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="103.10" y="257.34" width="596.85" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="255.15" width="88.62" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="139.53" y="255.15" width="560.42" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="252.96" width="76.55" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="127.46" y="252.96" width="572.49" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="250.76" width="44.29" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="95.20" y="250.76" width="604.75" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="248.57" width="47.36" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="98.27" y="248.57" width="601.68" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="246.38" width="7.54" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="58.44" y="246.38" width="641.51" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="244.18" width="117.79" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="168.69" y="244.18" width="531.26" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="241.99" width="41.90" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="92.81" y="241.99" width="607.14" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="239.80" width="36.55" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="87.46" y="239.80" width="612.49" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="237.60" width="30.19" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="81.09" y="237.60" width="618.86" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="235.41" width="71.46" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="122.37" y="235.41" width="577.58" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="233.22" width="46.37" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="97.28" y="233.22" width="602.67" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="231.02" width="32.44" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="83.35" y="231.02" width="616.60" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="228.83" width="65.92" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="116.82" y="228.83" width="583.13" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="226.64" width="38.52" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="89.43" y="226.64" width="610.52" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="224.44" width="346.08" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="396.99" y="224.44" width="302.96" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="222.25" width="47.79" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="98.70" y="222.25" width="601.25" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="220.06" width="66.55" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="117.45" y="220.06" width="582.50" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="217.86" width="9.72" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="60.63" y="217.86" width="639.32" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="215.67" width="101.30" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="152.21" y="215.67" width="547.74" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="213.48" width="61.26" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="112.16" y="213.48" width="587.79" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="211.28" width="41.22" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="92.12" y="211.28" width="607.83" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="209.09" width="86.41" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="137.32" y="209.09" width="562.63" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="206.90" width="63.17" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="114.08" y="206.90" width="585.87" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="204.70" width="46.18" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="97.09" y="204.70" width="602.86" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="202.51" width="265.70" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="316.61" y="202.51" width="383.34" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="200.32" width="86.02" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="136.93" y="200.32" width="563.02" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="198.12" width="43.88" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="94.79" y="198.12" width="605.16" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="195.93" width="133.12" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="184.03" y="195.93" width="515.92" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="193.74" width="46.65" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="97.55" y="193.74" width="602.40" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="191.54" width="104.92" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="155.83" y="191.54" width="544.12" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="189.35" width="48.11" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="99.02" y="189.35" width="600.93" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="187.16" width="64.69" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="115.60" y="187.16" width="584.35" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="184.96" width="34.87" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="85.78" y="184.96" width="614.17" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="182.77" width="26.14" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="77.05" y="182.77" width="622.90" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="180.58" width="110.19" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="161.10" y="180.58" width="538.85" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="178.38" width="55.61" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="106.51" y="178.38" width="593.44" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="176.19" width="21.24" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="72.15" y="176.19" width="627.80" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="174.00" width="41.91" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="92.81" y="174.00" width="607.14" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="171.80" width="27.40" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="78.31" y="171.80" width="621.64" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="169.61" width="91.25" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="142.15" y="169.61" width="557.80" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="167.42" width="47.17" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="98.08" y="167.42" width="601.87" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="165.22" width="57.62" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="108.52" y="165.22" width="591.43" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="163.03" width="37.15" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="88.06" y="163.03" width="611.89" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="160.84" width="18.54" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="69.44" y="160.84" width="630.51" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="158.64" width="208.59" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="259.50" y="158.64" width="440.45" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="156.45" width="55.03" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="105.94" y="156.45" width="594.01" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="154.26" width="42.66" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="93.57" y="154.26" width="606.38" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="152.06" width="111.78" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="162.69" y="152.06" width="537.26" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="149.87" width="56.81" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="107.71" y="149.87" width="592.24" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="147.68" width="34.62" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="85.53" y="147.68" width="614.42" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="145.48" width="48.87" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="99.77" y="145.48" width="600.18" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="143.29" width="90.97" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="141.88" y="143.29" width="558.07" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="141.10" width="39.87" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="90.77" y="141.10" width="609.18" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="138.90" width="20.86" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="71.77" y="138.90" width="628.18" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="136.71" width="53.21" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="104.12" y="136.71" width="595.83" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="134.52" width="41.88" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="92.79" y="134.52" width="607.16" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="132.32" width="26.18" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="77.09" y="132.32" width="622.86" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="130.13" width="146.05" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="196.95" y="130.13" width="503.00" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="127.94" width="75.25" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="126.16" y="127.94" width="573.79" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="125.74" width="33.03" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="83.94" y="125.74" width="616.01" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="123.55" width="106.55" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="157.46" y="123.55" width="542.49" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="121.36" width="36.88" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="87.78" y="121.36" width="612.17" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="119.16" width="71.24" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="122.14" y="119.16" width="577.81" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="116.97" width="34.60" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="85.50" y="116.97" width="614.45" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="114.78" width="46.44" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="97.35" y="114.78" width="602.60" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="112.58" width="123.31" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="174.22" y="112.58" width="525.73" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="110.39" width="36.23" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="87.13" y="110.39" width="612.82" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="108.20" width="19.37" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="70.28" y="108.20" width="629.67" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="106.00" width="12.20" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="63.11" y="106.00" width="636.84" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="103.81" width="45.11" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="96.01" y="103.81" width="603.94" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="101.62" width="27.47" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="78.38" y="101.62" width="621.57" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="99.42" width="35.82" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="86.73" y="99.42" width="613.22" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="97.23" width="18.65" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="69.56" y="97.23" width="630.39" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="95.04" width="25.56" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="76.47" y="95.04" width="623.48" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="92.85" width="21.77" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="72.68" y="92.85" width="627.27" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="90.65" width="19.85" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="70.76" y="90.65" width="629.19" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="88.46" width="76.23" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="127.14" y="88.46" width="572.81" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="86.27" width="31.38" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="82.29" y="86.27" width="617.66" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="84.07" width="54.31" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="105.22" y="84.07" width="594.73" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="81.88" width="40.21" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="91.11" y="81.88" width="608.84" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="79.69" width="19.44" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="70.34" y="79.69" width="629.61" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="77.49" width="50.05" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="100.96" y="77.49" width="598.99" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="75.30" width="36.87" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="87.78" y="75.30" width="612.17" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="73.11" width="19.28" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="70.19" y="73.11" width="629.76" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="70.91" width="24.53" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="75.44" y="70.91" width="624.51" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="68.72" width="15.80" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="66.71" y="68.72" width="633.24" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="66.53" width="25.31" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="76.21" y="66.53" width="623.74" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="64.33" width="17.27" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="68.18" y="64.33" width="631.77" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="50.91" y="62.14" width="7.73" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="58.63" y="62.14" width="641.32" height="2.19" stroke-width="1px" stroke="#FFFFFF" fill="#FF0000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<text transform="translate(353.03,560.83) " fill="#000000"  style="font-size:10pt" >Height</text>
+<polyline points="50.91 , 505.19 50.91 , 62.14 699.95 , 62.14 699.95 , 505.19 50.91 , 505.19 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(44.42,28.71) " fill="#000000"  style="font-size:12pt" >Classement&#160;hierarchiques&#160;des&#160;coordonnees</text>
+<text transform="translate(44.42,577.08) " fill="#000000"  style="font-size:10pt" >Agglomerative&#160;Coefficient&#160;=&#160;&#160;0.93</text>
+<line x1="50.91" y1="522.91" x2="699.95" y2="522.91" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<line x1="50.91" y1="522.91" x2="50.91" y2="528.33" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<line x1="138.40" y1="522.91" x2="138.40" y2="528.33" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<line x1="225.89" y1="522.91" x2="225.89" y2="528.33" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<line x1="313.38" y1="522.91" x2="313.38" y2="528.33" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<line x1="400.87" y1="522.91" x2="400.87" y2="528.33" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<line x1="488.37" y1="522.91" x2="488.37" y2="528.33" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<line x1="575.86" y1="522.91" x2="575.86" y2="528.33" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<line x1="663.35" y1="522.91" x2="663.35" y2="528.33" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<line x1="699.95" y1="522.91" x2="699.95" y2="528.33" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(47.38,544.58) " fill="#000000"  style="font-size:10pt" >0</text>
+<text transform="translate(129.24,544.58) " fill="#000000"  style="font-size:10pt" >0.5</text>
+<text transform="translate(222.36,544.58) " fill="#000000"  style="font-size:10pt" >1</text>
+<text transform="translate(304.23,544.58) " fill="#000000"  style="font-size:10pt" >1.5</text>
+<text transform="translate(397.35,544.58) " fill="#000000"  style="font-size:10pt" >2</text>
+<text transform="translate(479.21,544.58) " fill="#000000"  style="font-size:10pt" >2.5</text>
+<text transform="translate(572.33,544.58) " fill="#000000"  style="font-size:10pt" >3</text>
+<text transform="translate(654.19,544.58) " fill="#000000"  style="font-size:10pt" >3.5</text>
+<text transform="translate(687.27,544.58) " fill="#000000"  style="font-size:10pt" >3.71</text>
+<g id='ToolTip' opacity='1' visibility='hidden' pointer-events='none'>
+   <rect id='tipbox' x='0' y='5' width='88' height='16' rx='2' ry='2' fill='white' stroke='black'/>
+   <text id='tipText' x='5' y='16' font-family='Arial' font-size='8pt' fill='blue'>
+      <tspan id='tipTitle' x='5' font-weight='bold' fill='black'><![CDATA[]]></tspan>
+      <tspan id='tipDesc' x='5' dy='10'><![CDATA[]]></tspan>
+   </text>
+</g>
+</svg>

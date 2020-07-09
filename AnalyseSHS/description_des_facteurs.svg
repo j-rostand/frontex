@@ -1,0 +1,187 @@
+<svg version="1.1"
+     baseProfile="full"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     xmlns:ev="http://www.w3.org/2001/xml-events"
+     width="722.70" height="578.16"
+     viewBox="0,0,722.70,578.16"
+     font-family="Arial, Helvetica, sans-serif"
+     onload='Init(evt)'
+>
+<title>R SVG Plot</title>
+<desc>R SVG Plot with tooltips! (mode=1)</desc>
+<script type="text/ecmascript"><![CDATA[
+    var SVGDocument = null;
+    var SVGRoot = null;
+    var SVGViewBox = null;
+    var svgns = 'http://www.w3.org/2000/svg';
+    var xlinkns = 'http://www.w3.org/1999/xlink';
+    var toolTip = null;
+    var TrueCoords = null;
+    var tipBox = null;
+    var tipText = null;
+    var tipTitle = null;
+    var tipDesc = null;
+
+    var lastElement = null;
+    var titleText = '';
+    var titleDesc = '';
+
+
+    function Init(evt)
+    {
+       SVGDocument = evt.target.ownerDocument;
+       SVGRoot = SVGDocument.documentElement;
+       TrueCoords = SVGRoot.createSVGPoint();
+
+       toolTip = SVGDocument.getElementById('ToolTip');
+       tipBox = SVGDocument.getElementById('tipbox');
+       tipText = SVGDocument.getElementById('tipText');
+       tipText.setAttributeNS(null, 'font-family', 'Arial, sans-serif' );
+       tipTitle = SVGDocument.getElementById('tipTitle');
+       tipDesc = SVGDocument.getElementById('tipDesc');
+       //window.status = (TrueCoords);
+
+       //create event for object
+       SVGRoot.addEventListener('mousemove', ShowTooltip, false);
+       SVGRoot.addEventListener('mouseout', HideTooltip, false);
+    };
+
+
+    function GetTrueCoords(evt)
+    {
+       // find the current zoom level and pan setting, and adjust the reported
+       //    mouse position accordingly
+       var newScale = SVGRoot.currentScale;
+       var translation = SVGRoot.currentTranslate;
+       TrueCoords.x = (evt.clientX - translation.x)/newScale;
+       TrueCoords.y = (evt.clientY - translation.y)/newScale;
+    };
+
+
+    function HideTooltip( evt )
+    {
+       toolTip.setAttributeNS(null, 'visibility', 'hidden');
+    };
+
+
+    function ShowTooltip( evt )
+    {
+       GetTrueCoords( evt );
+
+       var tipScale = 1/SVGRoot.currentScale;
+       var textWidth = 0;
+       var tspanWidth = 0;
+       var boxHeight = 20;
+
+       tipBox.setAttributeNS(null, 'transform', 'scale(' + tipScale + ',' + tipScale + ')' );
+       tipText.setAttributeNS(null, 'transform', 'scale(' + tipScale + ',' + tipScale + ')' );
+
+       var titleValue = '';
+       var descValue = '';
+       var targetElement = evt.target;
+       if ( lastElement != targetElement )
+       {
+          var targetTitle = targetElement.getElementsByTagNameNS(svgns, 'title').item(0);
+          if ( targetTitle )
+          {
+             // if there is a 'title' element, use its contents for the tooltip title
+             titleValue = targetTitle.firstChild.nodeValue;
+          }
+
+          var targetDesc = targetElement.getElementsByTagNameNS(svgns, 'desc').item(0);
+          if ( targetDesc )
+          {
+             // if there is a 'desc' element, use its contents for the tooltip desc
+             descValue = targetDesc.firstChild.nodeValue;
+
+             if ( '' == titleValue )
+             {
+                // if there is no 'title' element, use the contents of the 'desc' element for the tooltip title instead
+                titleValue = descValue;
+                descValue = '';
+             }
+          }
+
+          // if there is still no 'title' element, use the contents of the 'id' attribute for the tooltip title
+          if ( '' == titleValue )
+          {
+             titleValue = targetElement.getAttributeNS(null, 'id');
+          }
+
+          // selectively assign the tooltip title and desc the proper values,
+          //   and hide those which don't have text values
+          //
+          var titleDisplay = 'none';
+          if ( '' != titleValue )
+          {
+             tipTitle.firstChild.nodeValue = titleValue;
+             titleDisplay = 'inline';
+          }
+          tipTitle.setAttributeNS(null, 'display', titleDisplay );
+
+
+          var descDisplay = 'none';
+          if ( '' != descValue )
+          {
+             tipDesc.firstChild.nodeValue = descValue;
+             descDisplay = 'inline';
+          }
+          tipDesc.setAttributeNS(null, 'display', descDisplay );
+       }
+
+       // if there are tooltip contents to be displayed, adjust the size and position of the box
+       if ( '' != titleValue )
+       {
+          var xPos = TrueCoords.x + (10 * tipScale);
+          var yPos = TrueCoords.y + (10 * tipScale);
+
+          //return rectangle around text as SVGRect object
+          var outline = tipText.getBBox();
+          tipBox.setAttributeNS(null, 'width', Number(outline.width) + 10);
+          tipBox.setAttributeNS(null, 'height', Number(outline.height) + 10);
+
+          // update position
+          toolTip.setAttributeNS(null, 'transform', 'translate(' + xPos + ',' + yPos + ')');
+          toolTip.setAttributeNS(null, 'visibility', 'visible');
+       }
+    };
+
+   ]]></script>
+<rect width="100%" height="100%" style="fill:#FFFFFF"/>
+<rect x="68.70" y="44.42" width="34.10" height="473.76" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="109.62" y="198.46" width="34.10" height="319.71" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="150.54" y="337.07" width="34.10" height="181.10" stroke-width="1px" stroke="#000000" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="191.45" y="363.19" width="34.10" height="154.98" stroke-width="1px" stroke="#000000" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="232.37" y="388.05" width="34.10" height="130.12" stroke-width="1px" stroke="#000000" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="273.29" y="426.50" width="34.10" height="91.67" stroke-width="1px" stroke="#000000" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="314.21" y="440.39" width="34.10" height="77.78" stroke-width="1px" stroke="#000000" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="355.13" y="453.53" width="34.10" height="64.65" stroke-width="1px" stroke="#000000" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="396.05" y="464.16" width="34.10" height="54.02" stroke-width="1px" stroke="#000000" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="436.97" y="466.17" width="34.10" height="52.00" stroke-width="1px" stroke="#000000" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="477.89" y="473.17" width="34.10" height="45.00" stroke-width="1px" stroke="#000000" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="518.81" y="484.13" width="34.10" height="34.04" stroke-width="1px" stroke="#000000" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="559.73" y="486.95" width="34.10" height="31.22" stroke-width="1px" stroke="#000000" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="600.65" y="493.43" width="34.10" height="24.74" stroke-width="1px" stroke="#000000" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<rect x="641.57" y="518.17" width="34.10" height="0.00" stroke-width="1px" stroke="#000000" fill="#FFFFFF" stroke-opacity="1.000000" fill-opacity="1.000000" />
+<line x1="44.42" y1="518.17" x2="44.42" y2="96.02" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<line x1="44.42" y1="518.17" x2="39.00" y2="518.17" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<line x1="44.42" y1="433.74" x2="39.00" y2="433.74" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<line x1="44.42" y1="349.31" x2="39.00" y2="349.31" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<line x1="44.42" y1="264.88" x2="39.00" y2="264.88" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<line x1="44.42" y1="180.45" x2="39.00" y2="180.45" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<line x1="44.42" y1="96.02" x2="39.00" y2="96.02" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(33.58,534.38)  rotate(-90)" fill="#000000"  style="font-size:10pt" >0.000</text>
+<text transform="translate(33.58,449.95)  rotate(-90)" fill="#000000"  style="font-size:10pt" >0.005</text>
+<text transform="translate(33.58,365.52)  rotate(-90)" fill="#000000"  style="font-size:10pt" >0.010</text>
+<text transform="translate(33.58,281.09)  rotate(-90)" fill="#000000"  style="font-size:10pt" >0.015</text>
+<text transform="translate(33.58,196.66)  rotate(-90)" fill="#000000"  style="font-size:10pt" >0.020</text>
+<text transform="translate(33.58,112.23)  rotate(-90)" fill="#000000"  style="font-size:10pt" >0.025</text>
+<g id='ToolTip' opacity='1' visibility='hidden' pointer-events='none'>
+   <rect id='tipbox' x='0' y='5' width='88' height='16' rx='2' ry='2' fill='white' stroke='black'/>
+   <text id='tipText' x='5' y='16' font-family='Arial' font-size='8pt' fill='blue'>
+      <tspan id='tipTitle' x='5' font-weight='bold' fill='black'><![CDATA[]]></tspan>
+      <tspan id='tipDesc' x='5' dy='10'><![CDATA[]]></tspan>
+   </text>
+</g>
+</svg>

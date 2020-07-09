@@ -1,0 +1,183 @@
+<svg version="1.1"
+     baseProfile="full"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     xmlns:ev="http://www.w3.org/2001/xml-events"
+     width="722.70" height="578.16"
+     viewBox="0,0,722.70,578.16"
+     font-family="Arial, Helvetica, sans-serif"
+     onload='Init(evt)'
+>
+<title>R SVG Plot</title>
+<desc>R SVG Plot with tooltips! (mode=1)</desc>
+<script type="text/ecmascript"><![CDATA[
+    var SVGDocument = null;
+    var SVGRoot = null;
+    var SVGViewBox = null;
+    var svgns = 'http://www.w3.org/2000/svg';
+    var xlinkns = 'http://www.w3.org/1999/xlink';
+    var toolTip = null;
+    var TrueCoords = null;
+    var tipBox = null;
+    var tipText = null;
+    var tipTitle = null;
+    var tipDesc = null;
+
+    var lastElement = null;
+    var titleText = '';
+    var titleDesc = '';
+
+
+    function Init(evt)
+    {
+       SVGDocument = evt.target.ownerDocument;
+       SVGRoot = SVGDocument.documentElement;
+       TrueCoords = SVGRoot.createSVGPoint();
+
+       toolTip = SVGDocument.getElementById('ToolTip');
+       tipBox = SVGDocument.getElementById('tipbox');
+       tipText = SVGDocument.getElementById('tipText');
+       tipText.setAttributeNS(null, 'font-family', 'Arial, sans-serif' );
+       tipTitle = SVGDocument.getElementById('tipTitle');
+       tipDesc = SVGDocument.getElementById('tipDesc');
+       //window.status = (TrueCoords);
+
+       //create event for object
+       SVGRoot.addEventListener('mousemove', ShowTooltip, false);
+       SVGRoot.addEventListener('mouseout', HideTooltip, false);
+    };
+
+
+    function GetTrueCoords(evt)
+    {
+       // find the current zoom level and pan setting, and adjust the reported
+       //    mouse position accordingly
+       var newScale = SVGRoot.currentScale;
+       var translation = SVGRoot.currentTranslate;
+       TrueCoords.x = (evt.clientX - translation.x)/newScale;
+       TrueCoords.y = (evt.clientY - translation.y)/newScale;
+    };
+
+
+    function HideTooltip( evt )
+    {
+       toolTip.setAttributeNS(null, 'visibility', 'hidden');
+    };
+
+
+    function ShowTooltip( evt )
+    {
+       GetTrueCoords( evt );
+
+       var tipScale = 1/SVGRoot.currentScale;
+       var textWidth = 0;
+       var tspanWidth = 0;
+       var boxHeight = 20;
+
+       tipBox.setAttributeNS(null, 'transform', 'scale(' + tipScale + ',' + tipScale + ')' );
+       tipText.setAttributeNS(null, 'transform', 'scale(' + tipScale + ',' + tipScale + ')' );
+
+       var titleValue = '';
+       var descValue = '';
+       var targetElement = evt.target;
+       if ( lastElement != targetElement )
+       {
+          var targetTitle = targetElement.getElementsByTagNameNS(svgns, 'title').item(0);
+          if ( targetTitle )
+          {
+             // if there is a 'title' element, use its contents for the tooltip title
+             titleValue = targetTitle.firstChild.nodeValue;
+          }
+
+          var targetDesc = targetElement.getElementsByTagNameNS(svgns, 'desc').item(0);
+          if ( targetDesc )
+          {
+             // if there is a 'desc' element, use its contents for the tooltip desc
+             descValue = targetDesc.firstChild.nodeValue;
+
+             if ( '' == titleValue )
+             {
+                // if there is no 'title' element, use the contents of the 'desc' element for the tooltip title instead
+                titleValue = descValue;
+                descValue = '';
+             }
+          }
+
+          // if there is still no 'title' element, use the contents of the 'id' attribute for the tooltip title
+          if ( '' == titleValue )
+          {
+             titleValue = targetElement.getAttributeNS(null, 'id');
+          }
+
+          // selectively assign the tooltip title and desc the proper values,
+          //   and hide those which don't have text values
+          //
+          var titleDisplay = 'none';
+          if ( '' != titleValue )
+          {
+             tipTitle.firstChild.nodeValue = titleValue;
+             titleDisplay = 'inline';
+          }
+          tipTitle.setAttributeNS(null, 'display', titleDisplay );
+
+
+          var descDisplay = 'none';
+          if ( '' != descValue )
+          {
+             tipDesc.firstChild.nodeValue = descValue;
+             descDisplay = 'inline';
+          }
+          tipDesc.setAttributeNS(null, 'display', descDisplay );
+       }
+
+       // if there are tooltip contents to be displayed, adjust the size and position of the box
+       if ( '' != titleValue )
+       {
+          var xPos = TrueCoords.x + (10 * tipScale);
+          var yPos = TrueCoords.y + (10 * tipScale);
+
+          //return rectangle around text as SVGRect object
+          var outline = tipText.getBBox();
+          tipBox.setAttributeNS(null, 'width', Number(outline.width) + 10);
+          tipBox.setAttributeNS(null, 'height', Number(outline.height) + 10);
+
+          // update position
+          toolTip.setAttributeNS(null, 'transform', 'translate(' + xPos + ',' + yPos + ')');
+          toolTip.setAttributeNS(null, 'visibility', 'visible');
+       }
+    };
+
+   ]]></script>
+<rect width="100%" height="100%" style="fill:#FFFFFF"/>
+<polyline points="68.70 , 62.14 71.72 , 62.14 71.72 , 146.61 74.74 , 146.61 74.74 , 186.53 77.76 , 186.53 77.76 , 239.83 80.77 , 239.83 80.77 , 258.89 83.79 , 258.89 83.79 , 268.02 86.81 , 268.02 86.81 , 271.38 89.83 , 271.38 89.83 , 306.94 92.85 , 306.94 92.85 , 326.89 95.87 , 326.89 95.87 , 332.27 98.89 , 332.27 98.89 , 346.98 101.91 , 346.98 101.91 , 362.30 104.93 , 362.30 104.93 , 366.33 107.95 , 366.33 107.95 , 370.40 110.97 , 370.40 110.97 , 374.34 113.99 , 374.34 113.99 , 374.50 117.01 , 374.50 117.01 , 377.91 120.03 , 377.91 120.03 , 379.51 123.05 , 379.51 123.05 , 385.42 126.07 , 385.42 126.07 , 395.76 129.09 , 395.76 129.09 , 396.87 132.11 , 396.87 132.11 , 397.42 135.13 , 397.42 135.13 , 409.53 138.15 , 409.53 138.15 , 410.37 141.17 , 410.37 141.17 , 414.64 144.19 , 414.64 144.19 , 418.45 147.21 , 418.45 147.21 , 418.86 150.23 , 418.86 150.23 , 419.99 153.25 , 419.99 153.25 , 422.91 156.27 , 422.91 156.27 , 425.23 159.29 , 425.23 159.29 , 429.05 162.31 , 429.05 162.31 , 429.16 165.33 , 429.16 165.33 , 430.28 168.35 , 430.28 168.35 , 430.59 171.37 , 430.59 171.37 , 431.34 174.39 , 431.34 174.39 , 431.58 177.41 , 431.58 177.41 , 431.93 180.43 , 431.93 180.43 , 432.56 183.45 , 432.56 183.45 , 433.19 186.47 , 433.19 186.47 , 434.29 189.49 , 434.29 189.49 , 436.81 192.51 , 436.81 192.51 , 436.90 195.53 , 436.90 195.53 , 436.99 198.55 , 436.99 198.55 , 437.93 201.57 , 437.93 201.57 , 438.37 204.59 , 438.37 204.59 , 440.43 207.61 , 440.43 207.61 , 440.94 210.63 , 440.94 210.63 , 441.58 213.65 , 441.58 213.65 , 442.68 216.66 , 442.68 216.66 , 442.93 219.68 , 442.93 219.68 , 443.80 222.70 , 443.80 222.70 , 445.68 225.72 , 445.68 225.72 , 446.14 228.74 , 446.14 228.74 , 447.37 231.76 , 447.37 231.76 , 447.56 234.78 , 447.56 234.78 , 448.08 237.80 , 448.08 237.80 , 449.19 240.82 , 449.19 240.82 , 449.45 243.84 , 449.45 243.84 , 449.67 246.86 , 449.67 246.86 , 450.00 249.88 , 450.00 249.88 , 450.71 252.90 , 450.71 252.90 , 450.98 255.92 , 450.98 255.92 , 451.71 258.94 , 451.71 258.94 , 453.42 261.96 , 453.42 261.96 , 455.17 264.98 , 455.17 264.98 , 457.52 268.00 , 457.52 268.00 , 457.75 271.02 , 457.75 271.02 , 458.42 274.04 , 458.42 274.04 , 459.19 277.06 , 459.19 277.06 , 459.78 280.08 , 459.78 280.08 , 460.41 283.10 , 460.41 283.10 , 460.95 286.12 , 460.95 286.12 , 461.04 289.14 , 461.04 289.14 , 461.19 292.16 , 461.19 292.16 , 462.58 295.18 , 462.58 295.18 , 463.39 298.20 , 463.39 298.20 , 463.43 301.22 , 463.43 301.22 , 463.46 304.24 , 463.46 304.24 , 463.88 307.26 , 463.88 307.26 , 464.43 310.28 , 464.43 310.28 , 464.64 313.30 , 464.64 313.30 , 464.70 316.32 , 464.70 316.32 , 464.87 319.34 , 464.87 319.34 , 464.88 322.36 , 464.88 322.36 , 465.16 325.38 , 465.16 325.38 , 465.46 328.40 , 465.46 328.40 , 465.71 331.42 , 465.71 331.42 , 466.00 334.44 , 466.00 334.44 , 466.76 337.46 , 466.76 337.46 , 467.18 340.48 , 467.18 340.48 , 468.09 343.50 , 468.09 343.50 , 468.64 346.52 , 468.64 346.52 , 469.03 349.54 , 469.03 349.54 , 469.66 352.55 , 469.66 352.55 , 469.77 355.57 , 469.77 355.57 , 469.90 358.59 , 469.90 358.59 , 470.07 361.61 , 470.07 361.61 , 470.60 364.63 , 470.60 364.63 , 470.69 367.65 , 470.69 367.65 , 470.98 370.67 , 470.98 370.67 , 471.16 373.69 , 471.16 373.69 , 471.20 376.71 , 471.20 376.71 , 471.71 379.73 , 471.71 379.73 , 471.99 382.75 , 471.99 382.75 , 472.39 385.77 , 472.39 385.77 , 472.88 388.79 , 472.88 388.79 , 473.19 391.81 , 473.19 391.81 , 473.64 394.83 , 473.64 394.83 , 474.29 397.85 , 474.29 397.85 , 474.35 400.87 , 474.35 400.87 , 475.31 403.89 , 475.31 403.89 , 475.45 406.91 , 475.45 406.91 , 475.83 409.93 , 475.83 409.93 , 476.64 412.95 , 476.64 412.95 , 477.04 415.97 , 477.04 415.97 , 477.05 418.99 , 477.05 418.99 , 477.17 422.01 , 477.17 422.01 , 477.26 425.03 , 477.26 425.03 , 477.39 428.05 , 477.39 428.05 , 477.56 431.07 , 477.56 431.07 , 477.57 434.09 , 477.57 434.09 , 477.69 437.11 , 477.69 437.11 , 477.81 440.13 , 477.81 440.13 , 478.18 443.15 , 478.18 443.15 , 478.22 446.17 , 478.22 446.17 , 478.32 449.19 , 478.32 449.19 , 478.37 452.21 , 478.37 452.21 , 478.41 455.23 , 478.41 455.23 , 478.45 458.25 , 478.45 458.25 , 478.50 461.27 , 478.50 461.27 , 478.60 464.29 , 478.60 464.29 , 478.61 467.31 , 478.61 467.31 , 478.95 470.33 , 478.95 470.33 , 479.24 473.35 , 479.24 473.35 , 479.27 476.37 , 479.27 476.37 , 479.49 479.39 , 479.49 479.39 , 479.81 482.41 , 479.81 482.41 , 480.09 485.42 , 480.09 485.42 , 480.25 488.44 , 480.25 488.44 , 480.28 491.46 , 480.28 491.46 , 480.53 494.48 , 480.53 494.48 , 480.93 497.50 , 480.93 497.50 , 481.12 500.52 , 481.12 500.52 , 481.45 503.54 , 481.45 503.54 , 481.45 506.56 , 481.45 506.56 , 481.47 509.58 , 481.47 509.58 , 481.58 512.60 , 481.58 512.60 , 481.93 515.62 , 481.93 515.62 , 482.54 518.64 , 482.54 518.64 , 482.63 521.66 , 482.63 521.66 , 482.64 524.68 , 482.64 524.68 , 482.82 527.70 , 482.82 527.70 , 482.86 530.72 , 482.86 530.72 , 482.90 533.74 , 482.90 533.74 , 483.15 536.76 , 483.15 536.76 , 483.36 539.78 , 483.36 539.78 , 483.79 542.80 , 483.79 542.80 , 483.99 545.82 , 483.99 545.82 , 484.73 548.84 , 484.73 548.84 , 484.92 551.86 , 484.92 551.86 , 484.93 554.88 , 484.93 554.88 , 485.15 557.90 , 485.15 557.90 , 485.19 560.92 , 485.19 560.92 , 485.37 563.94 , 485.37 563.94 , 485.65 566.96 , 485.65 566.96 , 486.31 569.98 , 486.31 569.98 , 486.48 573.00 , 486.48 573.00 , 486.50 576.02 , 486.50 576.02 , 487.58 579.04 , 487.58 579.04 , 487.68 582.06 , 487.68 582.06 , 487.99 585.08 , 487.99 585.08 , 488.29 588.10 , 488.29 588.10 , 488.72 591.12 , 488.72 591.12 , 489.20 594.14 , 489.20 594.14 , 489.55 597.16 , 489.55 597.16 , 491.42 600.18 , 491.42 600.18 , 491.47 603.20 , 491.47 603.20 , 491.85 606.22 , 491.85 606.22 , 492.31 609.24 , 492.31 609.24 , 492.34 612.26 , 492.34 612.26 , 492.74 615.28 , 492.74 615.28 , 492.92 618.30 , 492.92 618.30 , 493.45 621.31 , 493.45 621.31 , 493.93 624.33 , 493.93 624.33 , 494.34 627.35 , 494.34 627.35 , 494.64 630.37 , 494.64 630.37 , 495.36 633.39 , 495.36 633.39 , 495.72 636.41 , 495.72 636.41 , 495.99 639.43 , 495.99 639.43 , 496.68 642.45 , 496.68 642.45 , 496.97 645.47 , 496.97 645.47 , 497.01 648.49 , 497.01 648.49 , 497.08 651.51 , 497.08 651.51 , 497.51 654.53 , 497.51 654.53 , 497.59 657.55 , 497.59 657.55 , 498.46 660.57 , 498.46 660.57 , 499.48 663.59 , 499.48 663.59 , 501.96 666.61 , 501.96 666.61 , 502.64 669.63 , 502.64 669.63 , 503.68 672.65 , 503.68 672.65 , 505.06 675.67 , 505.06 675.67 , 505.19 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<line x1="65.68" y1="522.91" x2="669.63" y2="522.91" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<line x1="65.68" y1="522.91" x2="65.68" y2="528.33" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<line x1="216.66" y1="522.91" x2="216.66" y2="528.33" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<line x1="367.65" y1="522.91" x2="367.65" y2="528.33" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<line x1="518.64" y1="522.91" x2="518.64" y2="528.33" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<line x1="669.63" y1="522.91" x2="669.63" y2="528.33" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(62.15,544.58) " fill="#000000"  style="font-size:10pt" >0</text>
+<text transform="translate(209.61,544.58) " fill="#000000"  style="font-size:10pt" >50</text>
+<text transform="translate(357.07,544.58) " fill="#000000"  style="font-size:10pt" >100</text>
+<text transform="translate(508.06,544.58) " fill="#000000"  style="font-size:10pt" >150</text>
+<text transform="translate(659.05,544.58) " fill="#000000"  style="font-size:10pt" >200</text>
+<line x1="44.42" y1="510.39" x2="44.42" y2="147.84" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<line x1="44.42" y1="510.39" x2="39.00" y2="510.39" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<line x1="44.42" y1="389.54" x2="39.00" y2="389.54" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<line x1="44.42" y1="268.69" x2="39.00" y2="268.69" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<line x1="44.42" y1="147.84" x2="39.00" y2="147.84" stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(33.58,513.92)  rotate(-90)" fill="#000000"  style="font-size:10pt" >0</text>
+<text transform="translate(33.58,393.07)  rotate(-90)" fill="#000000"  style="font-size:10pt" >1</text>
+<text transform="translate(33.58,272.22)  rotate(-90)" fill="#000000"  style="font-size:10pt" >2</text>
+<text transform="translate(33.58,151.37)  rotate(-90)" fill="#000000"  style="font-size:10pt" >3</text>
+<polyline points="44.42 , 522.91 699.95 , 522.91 699.95 , 44.42 44.42 , 44.42 44.42 , 522.91 " stroke-width="1px" stroke="#000000" fill="#000000" stroke-opacity="1.000000" fill-opacity="0.000000"/>
+<text transform="translate(315.15,566.24) " fill="#000000"  style="font-size:10pt" >Nombre&#160;de&#160;classes</text>
+<text transform="translate(11.92,302.06)  rotate(-90)" fill="#000000"  style="font-size:10pt" >Inertie</text>
+<g id='ToolTip' opacity='1' visibility='hidden' pointer-events='none'>
+   <rect id='tipbox' x='0' y='5' width='88' height='16' rx='2' ry='2' fill='white' stroke='black'/>
+   <text id='tipText' x='5' y='16' font-family='Arial' font-size='8pt' fill='blue'>
+      <tspan id='tipTitle' x='5' font-weight='bold' fill='black'><![CDATA[]]></tspan>
+      <tspan id='tipDesc' x='5' dy='10'><![CDATA[]]></tspan>
+   </text>
+</g>
+</svg>
