@@ -1,15 +1,26 @@
 ---
 title: Analyse textométrique du discours public de l'agence européenne Frontex
 author:
-- Jules Rostand[^16]
+- Jules Rostand[^1]
 date: 9 juillet 2020
-lang: fr-FR
-bibliography: bibliographie.yaml
 abstract: Cette étude confronte aux méthodes textométriques l'approche manuelle dévelopées par Cécile Dubernet dans son analyse du discours public de l'agence européenne Frontex. Si cette analyse confirme bien la thèse défendue par Cécile Dubernet selon laquelle le discours public de Frontex se caractérise par la mise en avant de la vulnérabilité des frontières plutôt que celle des réfugiés, les méthodes textométriques permettent également de dégager les reconfigurations du discours public de cette agence européenne face à la crise.
-geometry: "left=4cm,right=4cm,top=2cm,bottom=2cm"
+bibliography: bibliographie.yaml
+link-citations: true
+color-links: true
+linkcolor: black
+urlcolor: BrickRed
+citecolor: black
+toc: false
+numbersections: true
+csquotes: true
+fontsize: 12pt
+linestretch: 1.15
+geometry: [a4paper,left=30mm,right=30mm,top=30mm,bottom=30mm]
+header-includes:
+    - \usepackage[french]{babel}
+    - \usepackage[babel=true]{csquotes}
+    - \usepackage[bottom]{footmisc} 
 ---
-
-[^16]: Dossier rendu dans le cadre de la formation en textométrie proposée par M. Léo Dumont au sein du [parcours histoire, sciences numériques et quantitatives](https://www.pantheonsorbonne.fr/axe-de-recherche/pole-informatique-de-recherche-et-denseignement-en-histoire/master-recherche/parcours-histoire-sciences-numeriques-et-quantitatives/) de l'École d'Histoire de la Sorbonne.
 
 # Introduction
 
@@ -19,11 +30,11 @@ Frontex est une agence de l'Union européenne, initiallement chargée de la gest
 
 ## Constitution du corpus 
 
-Ce corpus est constitué de l'ensemble des communiqués de presse de l'agence Frontex, disponible à l'adresse <https://frontex.europa.eu/media-centre/news-release/>. Si cette littérature - uniquement disponible en langue anglaise - n'épuise pas toutes les publications officielles de cette administration, comme ses rapports annuels ou les discours de ses représentants par exemple, ceux-ci représentent toutefois un objet privilégié d'analyse par l'écho qu'ils connaissent et par la fréquence de leur parution[@dubernet_qui_2018, p. 208]. Bien que ne représentant qu'une partie des documents étudiés par Cécile Duberne, les communiqués de presse ont l'avantage d'être publiés de manière normalisée, ce qui facilite la constitution d'un corpus ayant vocation à être soumis à des outils informatiques.
+Ce corpus est constitué de l'ensemble des communiqués de presse de l'agence Frontex, disponible à l'adresse <https://frontex.europa.eu/media-centre/news-release/>. Si cette littérature - uniquement disponible en langue anglaise - n'épuise pas toutes les publications officielles de cette administration, comme ses rapports annuels ou les discours de ses représentants par exemple, ceux-ci représentent toutefois un objet privilégié d'analyse par l'écho qu'ils connaissent et par la fréquence de leur parution[@dubernet_qui_2018, p. 208]. Bien que ne représentant qu'une partie des documents étudiés par Cécile Dubernet, les communiqués de presse ont l'avantage d'être publiés de manière normalisée, ce qui facilite la constitution d'un corpus ayant vocation à être soumis à des outils informatiques.
 
 D'un point de vue technique, la constitution de ce corpus se fait en trois étapes : 1° les métadonnées (titre, date et lien) des communiqués de presse sont obtenues ; 2° l'ensemble des textes des communiqués de presse est récupéré ; 3° un corpus est constitué à l'aide du logiciel TXM. L'ensemble de ces éléments est disponible sur le dépot GitHub <https://github.com/j-rostand/frontex>. Plus précisément : 
 
-1. Les métadonnées des communiqués de presse, lien, titre[^2] et date, sont récupérées à l'aide du script Python `frontex-metadata.py`[^4]. Elles sont enregistrées dans le fichier `metadata.csv` au sein du dossier `FRONTEX. 
+1. Les métadonnées des communiqués de presse, lien, titre[^3] et date, sont récupérées à l'aide du script Python `frontex-metadata.py`[^4]. Elles sont enregistrées dans le fichier `metadata.csv` au sein du dossier `FRONTEX`. 
 2. Les textes des communiqués de presse sont récupérés à l'aide du script Python `frontex-corpus.py`. Ces textes sont enregistrés dans des fichiers `.txt` au sein du dossier `FRONTEX` et prennent comme nom leurs URLs. 
 3. Le corpus est constitué à l'aide du logiciel TXM[@heiden_txm_2010] à partir du fichier de métadonnées et de l'ensemble des fichiers textes récupérés en suivant la méthodologie proposée par Eva Schaeffer-Lacroix[@schaeffer-lacroix_preparer_2018]. Annoté par [TreeTagger](https://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/) en anglais, ce corpus est enregistré en format binaire sous le nom de `FRONTEX.txm`.
 
@@ -43,7 +54,7 @@ La période d'étude de Cécile Dubernet, 2006-2016, est reprise en créant un s
 
 `/region[text,a]:: a.text_date="2006.*" | a.text_date="2007.*" | a.text_date="2008.*" | a.text_date="2009.*" | a.text_date="2010.*" | a.text_date="2011.*" | a.text_date="2012.*" | a.text_date="2013.*" | a.text_date="2014.*" | a.text_date="2015.*" | a.text_date="2016.*"`
  
-Au sein de ce corpus, les lemmes obtenus à l'aide de TreeTagger seront utilisés afin d'identifier les concordances, les coocurences et la progression de ces diverses formes[^1]. 
+Au sein de ce corpus, les lemmes obtenus à l'aide de TreeTagger seront utilisés afin d'identifier les concordances, les coocurences et la progression de ces diverses formes[^2]. 
 
 ### Étude de l'évolution temporelle du discours public
 
@@ -162,7 +173,7 @@ Ce lexique de l'action humanitaire met fortement en avant la thématique du sauv
 
 ## L'évolution temporelle de la structure générale du discours public (2006-2020)
 
-La partition `Années est marqué par une certaine hétérogénéité entre les années. L'année 2015 reprèsente ainsi à elle seule plus de 23 000 mots inscrits dans les communiqués de presse tandis que ceux datés de 2014 n'en comptent que 7 000. Par ailleurs, le début et la fin de notre période d'étude sont marqués par une faible contribution : les communiqués de presse de l'année 2006 ne comptent guère plus de 1 000 mots, tandis qu'en 2020 - année en cours - ceux-ci se limitent au total à près de 3 500 mots. Les dimensions de cette partition sont résumées en [@fig:fig2].
+La partition `Années` est marqué par une certaine hétérogénéité entre les années. L'année 2015 reprèsente ainsi à elle seule plus de 23 000 mots inscrits dans les communiqués de presse tandis que ceux datés de 2014 n'en comptent que 7 000. Par ailleurs, le début et la fin de notre période d'étude sont marqués par une faible contribution : les communiqués de presse de l'année 2006 ne comptent guère plus de 1 000 mots, tandis qu'en 2020 - année en cours - ceux-ci se limitent au total à près de 3 500 mots. Les dimensions de cette partition sont résumées en [@fig:fig2].
 
 ![Dimensions de la partition Années du corpus FRONTEX"](./TXM/annees-partition.svg "Dimensions de la partition Années du corpus FRONTEX"){#fig:fig2}
 
@@ -208,15 +219,13 @@ Enfin, conformément à la thèse de Cécile Dubernet[@dubernet_qui_2018, p. 215
 
 ## Les reconfigurations du discours public de Frontex face à la crise
 
-L'étude textométrique a permis de dégager l'évolution temporelle du discours public de l'agence Frontex. Cette évolution temporelle est marquée par la césure que représente la crise migratoire de 2015. Face a ce phénomène, l'agence a réinventé son discours public pour se poser en acteur unique de l'action humanitaire, en prenant à revers la posture technique qu'elle avait développée en 2013 pour laquelle elle avait été critiquée[@loubiere_frontex_2013]. L'obtention de légitimité politique que marque la transformation de l'agence en *European Border and Coast Guard Agency* se retrouve dans son discours public, qui prétend à la légitimité morale en invoquant les *fundamental rights* tout en assumant la clôture de la frontière.
+L'étude textométrique a permis de dégager l'évolution temporelle du discours public de l'agence Frontex. Cette évolution temporelle est marquée par la césure que représente la crise migratoire de 2015. Face à ce phénomène, l'agence a réinventé son discours public pour se poser en acteur unique de l'action humanitaire, en prenant à revers la posture technique qu'elle avait développée en 2013 pour laquelle elle avait été critiquée[@loubiere_frontex_2013]. L'obtention de légitimité politique que marque la transformation de l'agence en *European Border and Coast Guard Agency* se retrouve dans son discours public, qui prétend à la légitimité morale en invoquant les *fundamental rights* tout en assumant la clôture de la frontière.
 
 # Conclusion
 
-L'étude automatisée du corpus des communiqués de presse de Frontex a permis de confirmer et d'apporter des précisions à la thèse défendue par Cécile Dubernet selon laquelle le discours public de Frontex se caractérise par la mise en avant de la vulnérabilité des frontières plutôt que celle des réfugiés. Si cette méthode ne remplace pas le fin exercice d'analyse de l'iconographie, des images et des cartes effectué[^3], rien ne semble justifier l'assertion qu'une "lecture humaine" serait plus appropriée qu'une "revue automatisée" pour dégager du sens de ce corpus des communiqués de presse. Au-delà de cette querelle de doctrine au regard des méthodes numériques, la "lecture automatisée" effectuée ici sur l'ensemble du corpus a permis de mettre à jour les reconfigurations du discours public de l'agence Frontex face à la crise ; résultat qu'il conviendrait à l'avenir de confronter, par l'approche mutlidimensionnelle adoptée par Cécile Dubernet dans son article mais également par l'approche textométrique développée ici, aux évolutions du discours public des critiques de cette politique migratoire à laquelle Frontex participe. 
+L'étude automatisée du corpus des communiqués de presse de Frontex a permis de confirmer et d'apporter des précisions à la thèse défendue par Cécile Dubernet selon laquelle le discours public de Frontex se caractérise par la mise en avant de la vulnérabilité des frontières plutôt que celle des réfugiés. Si cette méthode ne remplace pas le fin exercice d'analyse de l'iconographie, des images et des cartes effectué[@dubernet_qui_2018, p. 218-219], l'assertion qu'une "lecture humaine" serait plus appropriée qu'une "revue automatisée" pour dégager du sens de ce corpus des communiqués de presse semble excessive. Au-delà de cette querelle de doctrine au regard des méthodes numériques, la "lecture automatisée" effectuée ici sur l'ensemble du corpus a permis de mettre à jour les reconfigurations du discours public de l'agence Frontex face à la crise ; résultat qu'il conviendrait à l'avenir de confronter, par l'approche mutlidimensionnelle adoptée par Cécile Dubernet dans son article mais également par l'approche textométrique développée ici, aux évolutions du discours public des critiques de cette politique migratoire à laquelle Frontex participe. 
 
-# Annexe
-
-![Progression des lemmes du lexique de la vulnérabilité](./TXM/2006-2016-progression-vulnerabilite.svg "Progression des lemmes du lexique de la vulnérabilité"){#fig:fig1}
+# Annexes
 
 | Nom | Bibliothèques | Objet |
 |:---|---|---|
@@ -226,11 +235,15 @@ L'étude automatisée du corpus des communiqués de presse de Frontex a permis d
 | `CAH.R` | `cluster`, `JLutils`, `RSVGTipsDevice`, `FactoMineR` | Classification acsendate hiérarchique proposée par AnalyseSHS |
 : Scripts et bibliothèques employés
 
-# Références
+![Progression des lemmes du lexique de la vulnérabilité](./TXM/2006-2016-progression-vulnerabilite.svg "Progression des lemmes du lexique de la vulnérabilité"){#fig:fig1}
 
-[^1]: En conséquence, les expressions *at risk* et *in need of* ne seront pas étudiées en tant que telles mais à travers les termes *risk* et *need*.
+[^1]: Dossier rendu dans le cadre de la formation en textométrie proposée par M. Léo Dumont au sein du [parcours histoire, sciences numériques et quantitatives](https://www.pantheonsorbonne.fr/axe-de-recherche/pole-informatique-de-recherche-et-denseignement-en-histoire/master-recherche/parcours-histoire-sciences-numeriques-et-quantitatives/) de l'École d'Histoire de la Sorbonne.
 
-[^2]: Compte tenu de la briéveté des communiqués et de leur propension à reprendre la formulation du titre dans le corps du texte, ceux-ci sont considérés au cours de l'analyse comme des métadonnées et non comme une partie du texte. Il est toutefois parfaitement envisageable de suivre la stratégie opposée. 
+[^2]: En conséquence, les expressions *at risk* et *in need of* ne seront pas étudiées en tant que telles mais à travers les termes *risk* et *need*.
+
+[^3]: Compte tenu de la briéveté des communiqués et de leur propension à reprendre la formulation du titre dans le corps du texte, ceux-ci sont considérés au cours de l'analyse comme des métadonnées et non comme une partie du texte. Il est toutefois parfaitement envisageable de suivre la stratégie opposée. 
+
+[^4]: L'ensemble des scripts Python et R est disponible au sein du dossier `scripts`.
 
 [^5]: Le lemme *career* (4 occurences) est écarté de l'analyse.
 
@@ -254,6 +267,7 @@ L'étude automatisée du corpus des communiqués de presse de Frontex a permis d
 
 [^15]: Voir le script `CAH.R` obtenu sur AnalyseSHS.
 
-[^3]: [@dubernet_qui_2018, p. 218-219].
+# References
 
-[^4]: L'ensemble des scripts Python et R est disponible au sein du dossier `scripts`.
+::: {#refs}
+:::
